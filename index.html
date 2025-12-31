@@ -9,40 +9,66 @@
     <style>
         /* ===== СБРОС И БАЗОВЫЕ СТИЛИ ===== */
         :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #151520;
-            --bg-card: #1e1e2d;
-            --bg-hover: #2a2a3a;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0c0;
-            --text-muted: #6c6c8a;
-            --accent: #7d5fff;
-            --accent-hover: #8d6eff;
-            --accent-light: rgba(125, 95, 255, 0.1);
-            --success: #00d4aa;
-            --warning: #ffb74d;
-            --danger: #ff6b8b;
-            --border: #2d2d42;
-            --border-light: #3a3a50;
-            --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
-            --gradient: linear-gradient(135deg, #7d5fff 0%, #a855f7 100%);
-            --gradient-dark: linear-gradient(135deg, #1e1e2d 0%, #151520 100%);
+            --bg-primary: #0f1117;
+            --bg-secondary: #1a1d26;
+            --bg-card: #232734;
+            --bg-hover: #2d3244;
+            --text-primary: #e4e6f0;
+            --text-secondary: #8c92b0;
+            --text-muted: #6a708a;
+            --accent: #6c63ff;
+            --accent-hover: #7a72ff;
+            --accent-light: rgba(108, 99, 255, 0.1);
+            --success: #4cd964;
+            --warning: #ffcc00;
+            --danger: #ff6b6b;
+            --border: #34384d;
+            --border-light: #3e435a;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.5);
+            --gradient: linear-gradient(135deg, #6c63ff 0%, #8a84ff 100%);
+            --gradient-dark: linear-gradient(135deg, #1a1d26 0%, #0f1117 100%);
+        }
+        
+        /* ФОНОВОЕ ИЗОБРАЖЕНИЕ */
+        body {
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(108, 99, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(76, 217, 100, 0.05) 0%, transparent 50%),
+                var(--bg-primary);
+            background-attachment: fixed;
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* Градиентные акценты */
+        .gradient-bg {
+            background: var(--gradient-dark);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+        }
+        
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.02'/%3E%3C/svg%3E");
+            z-index: -1;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            line-height: 1.6;
-            min-height: 100vh;
-            overflow-x: hidden;
         }
         
         /* ===== КОНТЕЙНЕР И СЕТКА ===== */
@@ -71,11 +97,8 @@
             border: 1px solid var(--border);
             box-shadow: var(--shadow);
             text-align: center;
-            transition: transform 0.3s ease;
-        }
-        
-        .profile-card:hover {
-            transform: translateY(-5px);
+            backdrop-filter: blur(10px);
+            background: rgba(35, 39, 52, 0.9);
         }
         
         .avatar-container {
@@ -90,28 +113,15 @@
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--accent);
-            box-shadow: 0 0 0 8px rgba(125, 95, 255, 0.2);
-        }
-        
-        .online-status {
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            width: 20px;
-            height: 20px;
-            background: var(--success);
-            border-radius: 50%;
-            border: 3px solid var(--bg-card);
+            border: 3px solid var(--accent);
+            box-shadow: 0 0 0 6px rgba(108, 99, 255, 0.15);
         }
         
         .profile-name {
             font-size: 1.8rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--text-primary);
         }
         
         .profile-bio {
@@ -127,22 +137,6 @@
             padding: 1rem 0;
             border-top: 1px solid var(--border);
             border-bottom: 1px solid var(--border);
-        }
-        
-        .stat {
-            text-align: center;
-        }
-        
-        .stat-value {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: var(--accent);
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.3rem;
         }
         
         .quick-actions {
@@ -167,42 +161,35 @@
         }
         
         .action-btn:hover {
-            background: var(--accent);
+            background: var(--bg-hover);
             transform: translateX(5px);
+            border-color: var(--accent);
         }
         
-        .action-btn i {
-            font-size: 1.1rem;
-        }
-        
+        /* ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР ===== */
         .music-widget {
-            background: var(--bg-card);
+            background: rgba(35, 39, 52, 0.9);
             border-radius: 20px;
             padding: 1.5rem;
             border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
         }
         
-        .music-widget h3 {
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
+        .player-container {
+            position: relative;
+            overflow: hidden;
         }
         
-        .current-track {
+        .audio-player {
+            width: 100%;
+            margin-top: 1rem;
             background: var(--bg-secondary);
-            border-radius: 12px;
-            padding: 1rem;
-            margin-bottom: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--border);
         }
         
-        .track-info h4 {
-            margin-bottom: 0.3rem;
-        }
-        
-        .track-info p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
+        audio::-webkit-media-controls-panel {
+            background: var(--bg-secondary);
         }
         
         /* ===== ОСНОВНАЯ ЛЕНТА ===== */
@@ -213,10 +200,11 @@
         }
         
         .create-post {
-            background: var(--bg-card);
+            background: rgba(35, 39, 52, 0.9);
             border-radius: 20px;
             padding: 1.5rem;
             border: 1px solid var(--border);
+            backdrop-filter: blur(10px);
         }
         
         .post-input {
@@ -255,24 +243,24 @@
         }
         
         .icon-btn:hover {
-            background: var(--accent);
-            color: white;
+            background: var(--bg-hover);
+            color: var(--text-primary);
         }
         
         .post-submit {
             padding: 10px 24px;
-            background: var(--gradient);
-            border: none;
+            background: var(--bg-secondary);
+            border: 1px solid var(--accent);
             border-radius: 10px;
-            color: white;
+            color: var(--accent);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
         .post-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(125, 95, 255, 0.3);
+            background: var(--accent);
+            color: white;
         }
         
         .feed {
@@ -282,16 +270,11 @@
         }
         
         .post-card {
-            background: var(--bg-card);
+            background: rgba(35, 39, 52, 0.9);
             border-radius: 20px;
             padding: 1.5rem;
             border: 1px solid var(--border);
-            transition: transform 0.3s ease;
-        }
-        
-        .post-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent);
+            backdrop-filter: blur(10px);
         }
         
         .post-header {
@@ -314,39 +297,18 @@
             object-fit: cover;
         }
         
-        .author-info h4 {
-            margin-bottom: 0.2rem;
-        }
-        
-        .author-info span {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .post-menu {
-            position: relative;
-        }
-        
-        .menu-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 5px;
-        }
-        
-        .post-content {
-            margin-bottom: 1rem;
-            line-height: 1.7;
-        }
-        
         .post-image {
             width: 100%;
             border-radius: 12px;
             margin: 1rem 0;
             max-height: 400px;
             object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        
+        .post-image:hover {
+            transform: scale(1.02);
         }
         
         .post-footer {
@@ -359,7 +321,7 @@
         
         .post-stats {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
         }
         
         .stat-btn {
@@ -371,14 +333,17 @@
             color: var(--text-secondary);
             cursor: pointer;
             transition: color 0.3s ease;
+            padding: 8px 12px;
+            border-radius: 8px;
         }
         
         .stat-btn:hover {
-            color: var(--accent);
+            background: var(--bg-hover);
         }
         
         .stat-btn.liked {
             color: var(--danger);
+            background: rgba(255, 107, 107, 0.1);
         }
         
         /* ===== ПРАВАЯ ПАНЕЛЬ ===== */
@@ -389,46 +354,12 @@
         }
         
         .links-section {
-            background: var(--bg-card);
+            background: rgba(35, 39, 52, 0.9);
             border-radius: 20px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             border: 1px solid var(--border);
-        }
-        
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.2rem;
-        }
-        
-        .section-title h3 {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .edit-btn {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            width: 36px;
-            height: 36px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .edit-btn:hover {
-            background: var(--accent);
-            color: white;
-        }
-        
-        .links-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
+            backdrop-filter: blur(10px);
         }
         
         .social-link {
@@ -447,52 +378,6 @@
         .social-link:hover {
             background: var(--bg-hover);
             border-color: var(--accent);
-            transform: translateX(5px);
-        }
-        
-        .link-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            background: var(--accent-light);
-            color: var(--accent);
-        }
-        
-        .link-text {
-            flex: 1;
-        }
-        
-        .link-text h4 {
-            margin-bottom: 0.2rem;
-        }
-        
-        .link-text span {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .upcoming-events {
-            background: var(--bg-card);
-            border-radius: 20px;
-            padding: 1.5rem;
-            border: 1px solid var(--border);
-        }
-        
-        .event {
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-            margin-bottom: 1rem;
-        }
-        
-        .event-date {
-            color: var(--accent);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
         }
         
         /* ===== АДМИН-ПАНЕЛЬ ===== */
@@ -513,7 +398,7 @@
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: var(--bg-card);
+            background: rgba(35, 39, 52, 0.95);
             border-radius: 24px;
             width: 90%;
             max-width: 800px;
@@ -523,160 +408,60 @@
             display: none;
             border: 1px solid var(--border);
             box-shadow: var(--shadow-lg);
+            backdrop-filter: blur(20px);
         }
         
-        .admin-header {
-            padding: 1.5rem 2rem;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .admin-tabs {
-            display: flex;
-            border-bottom: 1px solid var(--border);
-            background: var(--bg-secondary);
-        }
-        
-        .admin-tab {
-            flex: 1;
-            padding: 1rem;
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-        
-        .admin-tab.active {
-            background: var(--bg-card);
-            color: var(--accent);
-            border-bottom: 2px solid var(--accent);
-        }
-        
-        .admin-content {
-            padding: 2rem;
-        }
-        
-        .tab-content {
-            display: none;
-        }
-        
-        .tab-content.active {
-            display: block;
-            animation: fadeIn 0.3s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-primary);
-            font-weight: 500;
-        }
-        
-        .form-input {
+        /* ===== МОДАЛКА ДЛЯ ИЗОБРАЖЕНИЙ ===== */
+        .image-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-family: inherit;
-            transition: all 0.3s ease;
-        }
-        
-        .form-input:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(125, 95, 255, 0.2);
-        }
-        
-        .admin-actions {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-        
-        .btn-primary {
-            padding: 12px 24px;
-            background: var(--gradient);
-            border: none;
-            border-radius: 10px;
-            color: white;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(125, 95, 255, 0.3);
-        }
-        
-        .btn-secondary {
-            padding: 12px 24px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-secondary:hover {
-            background: var(--bg-hover);
-        }
-        
-        .music-list, .links-list, .posts-list {
-            max-height: 300px;
-            overflow-y: auto;
-            margin: 1rem 0;
-            padding: 1rem;
-            background: var(--bg-secondary);
-            border-radius: 12px;
-        }
-        
-        .admin-item {
-            display: flex;
-            justify-content: space-between;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 10002;
+            display: none;
+            justify-content: center;
             align-items: center;
-            padding: 1rem;
-            background: var(--bg-card);
-            border-radius: 10px;
-            margin-bottom: 0.8rem;
         }
         
-        .item-actions {
-            display: flex;
-            gap: 8px;
+        .modal-image {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 12px;
+            object-fit: contain;
         }
         
-        .item-btn {
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            color: var(--text-secondary);
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .item-btn:hover {
-            background: var(--accent);
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
             color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+        
+        /* ===== ПРОГРЕСС БАР МУЗЫКИ ===== */
+        .progress-container {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-secondary);
+            border-radius: 2px;
+            margin: 10px 0;
+            cursor: pointer;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 2px;
+            width: 0%;
+            transition: width 0.1s linear;
         }
         
         /* ===== АДАПТИВНОСТЬ ===== */
@@ -698,21 +483,6 @@
                 position: static;
             }
         }
-        
-        /* ===== АНИМАЦИИ ===== */
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { opacity: 1; }
-            50% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease;
-        }
     </style>
     
     <!-- Font Awesome -->
@@ -722,6 +492,16 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- ФОНОВЫЕ ЭФФЕКТЫ -->
+    <div class="gradient-bg"></div>
+    <div class="noise-overlay"></div>
+    
+    <!-- МОДАЛКА ДЛЯ ИЗОБРАЖЕНИЙ -->
+    <div class="image-modal" id="imageModal" onclick="closeImageModal()">
+        <button class="close-modal" onclick="closeImageModal()">×</button>
+        <img class="modal-image" id="modalImage" onclick="event.stopPropagation()">
+    </div>
+    
     <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
     <div class="app-container">
         <!-- ЛЕВАЯ ПАНЕЛЬ -->
@@ -729,7 +509,6 @@
             <div class="profile-card">
                 <div class="avatar-container">
                     <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop" alt="Аватар" class="avatar" id="profileAvatar">
-                    <div class="online-status"></div>
                 </div>
                 <h1 class="profile-name" id="profileName">Moros Network</h1>
                 <p class="profile-bio" id="profileBio">Создаю будущее. Музыка, код, дизайн. Добро пожаловать в мой цифровой мир.</p>
@@ -740,12 +519,8 @@
                         <div class="stat-label">Подписчики</div>
                     </div>
                     <div class="stat">
-                        <div class="stat-value" id="postsCount">24</div>
+                        <div class="stat-value" id="postsCount">2</div>
                         <div class="stat-label">Посты</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-value" id="linksCount">8</div>
-                        <div class="stat-label">Ссылки</div>
                     </div>
                 </div>
                 
@@ -753,33 +528,38 @@
                     <button class="action-btn" onclick="openAdminPanel()">
                         <i class="fas fa-cog"></i> Настройки профиля
                     </button>
-                    <button class="action-btn" onclick="openTab('links')">
-                        <i class="fas fa-link"></i> Управление ссылками
+                    <button class="action-btn" onclick="addNewLink()">
+                        <i class="fas fa-plus"></i> Добавить ссылку
                     </button>
-                    <button class="action-btn" onclick="openTab('music')">
-                        <i class="fas fa-music"></i> Редактировать музыку
-                    </button>
-                    <button class="action-btn" onclick="createNewPost()">
-                        <i class="fas fa-edit"></i> Написать пост
+                    <button class="action-btn" onclick="addNewTrack()">
+                        <i class="fas fa-music"></i> Добавить музыку
                     </button>
                 </div>
             </div>
             
             <div class="music-widget">
-                <h3><i class="fas fa-headphones"></i> Сейчас играет</h3>
-                <div class="current-track">
-                    <div class="track-info">
-                        <h4 id="currentTrack">Lose Yourself</h4>
-                        <p id="currentArtist">Eminem</p>
+                <h3><i class="fas fa-headphones"></i> Музыкальный плеер</h3>
+                <div class="player-container">
+                    <div class="current-track">
+                        <div class="track-info">
+                            <h4 id="currentTrack">Выберите трек</h4>
+                            <p id="currentArtist">Нажмите на трек для воспроизведения</p>
+                        </div>
+                        <!-- Прогресс бар -->
+                        <div class="progress-container" onclick="seekAudio(event)">
+                            <div class="progress-bar" id="progressBar"></div>
+                        </div>
+                        <div class="player-controls" style="display: flex; gap: 10px; margin-top: 10px;">
+                            <button class="icon-btn" onclick="playPrev()"><i class="fas fa-step-backward"></i></button>
+                            <button class="icon-btn" onclick="togglePlay()"><i class="fas fa-play" id="playBtn"></i></button>
+                            <button class="icon-btn" onclick="playNext()"><i class="fas fa-step-forward"></i></button>
+                            <button class="icon-btn" onclick="stopAudio()"><i class="fas fa-stop"></i></button>
+                        </div>
                     </div>
-                    <div class="player-controls" style="display: flex; gap: 10px; margin-top: 10px;">
-                        <button class="icon-btn" onclick="playPrev()"><i class="fas fa-step-backward"></i></button>
-                        <button class="icon-btn" onclick="togglePlay()"><i class="fas fa-play" id="playBtn"></i></button>
-                        <button class="icon-btn" onclick="playNext()"><i class="fas fa-step-forward"></i></button>
+                    <audio id="audioPlayer" class="audio-player" ontimeupdate="updateProgress()"></audio>
+                    <div class="playlist" id="playlist" style="margin-top: 1rem; max-height: 200px; overflow-y: auto;">
+                        <!-- Плейлист будет здесь -->
                     </div>
-                </div>
-                <div class="playlist-preview" id="playlistPreview">
-                    <!-- Превью плейлиста -->
                 </div>
             </div>
         </aside>
@@ -790,13 +570,17 @@
                 <textarea class="post-input" id="newPostContent" placeholder="Что у вас нового? Поделитесь с сообществом..."></textarea>
                 <div class="post-actions">
                     <div class="attachment-btns">
-                        <button class="icon-btn"><i class="fas fa-image"></i></button>
-                        <button class="icon-btn"><i class="fas fa-music"></i></button>
-                        <button class="icon-btn"><i class="fas fa-link"></i></button>
-                        <button class="icon-btn"><i class="fas fa-smile"></i></button>
+                        <button class="icon-btn" onclick="addImageToPost()" title="Добавить изображение">
+                            <i class="fas fa-image"></i>
+                        </button>
+                        <button class="icon-btn" onclick="clearPost()" title="Очистить">
+                            <i class="fas fa-trash"></i>
+                        </button>
                     </div>
                     <button class="post-submit" onclick="publishPost()">Опубликовать</button>
                 </div>
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;" onchange="handleImageUpload(event)">
+                <div id="imagePreview" style="margin-top: 1rem;"></div>
             </div>
             
             <div class="feed" id="postsFeed">
@@ -809,7 +593,7 @@
             <div class="links-section">
                 <div class="section-title">
                     <h3><i class="fas fa-external-link-alt"></i> Мои ссылки</h3>
-                    <button class="edit-btn" onclick="openTab('links')">
+                    <button class="edit-btn" onclick="openAdminPanel()">
                         <i class="fas fa-edit"></i>
                     </button>
                 </div>
@@ -818,23 +602,9 @@
                 </div>
             </div>
             
-            <div class="upcoming-events">
-                <h3><i class="fas fa-calendar-alt"></i> Ближайшие события</h3>
-                <div class="event">
-                    <div class="event-date">25 Января 2024</div>
-                    <h4>Прямой эфир в Discord</h4>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Обсуждение новых технологий</p>
-                </div>
-                <div class="event">
-                    <div class="event-date">1 Февраля 2024</div>
-                    <h4>Запуск нового проекта</h4>
-                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Презентация и демонстрация</p>
-                </div>
-            </div>
-            
             <div style="margin-top: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
                 <p>© 2024 Moros Network. Все права защищены.</p>
-                <p style="margin-top: 0.5rem;">Версия 2.0 • Работает на GitHub Pages</p>
+                <p style="margin-top: 0.5rem;">Версия 2.1 • Слушайте музыку прямо на сайте</p>
             </div>
         </aside>
     </div>
@@ -842,22 +612,20 @@
     <!-- АДМИН-ПАНЕЛЬ -->
     <div class="admin-overlay" id="adminOverlay" onclick="closeAdminPanel()"></div>
     <div class="admin-panel" id="adminPanel">
-        <div class="admin-header">
-            <h2><i class="fas fa-crown"></i> Панель администратора</h2>
-            <button class="edit-btn" onclick="closeAdminPanel()">
+        <div class="admin-header" style="padding: 1.5rem 2rem; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;">
+            <h2><i class="fas fa-cog"></i> Панель управления</h2>
+            <button class="icon-btn" onclick="closeAdminPanel()">
                 <i class="fas fa-times"></i>
             </button>
         </div>
         
-        <div class="admin-tabs">
-            <button class="admin-tab active" onclick="switchTab('profile')">Профиль</button>
-            <button class="admin-tab" onclick="switchTab('links')">Ссылки</button>
-            <button class="admin-tab" onclick="switchTab('music')">Музыка</button>
-            <button class="admin-tab" onclick="switchTab('posts')">Посты</button>
-            <button class="admin-tab" onclick="switchTab('settings')">Настройки</button>
+        <div class="admin-tabs" style="display: flex; border-bottom: 1px solid var(--border); background: var(--bg-secondary);">
+            <button class="admin-tab active" onclick="switchTab('profile')" style="flex: 1; padding: 1rem; background: none; border: none; color: var(--text-secondary); cursor: pointer;">Профиль</button>
+            <button class="admin-tab" onclick="switchTab('links')" style="flex: 1; padding: 1rem; background: none; border: none; color: var(--text-secondary); cursor: pointer;">Ссылки</button>
+            <button class="admin-tab" onclick="switchTab('music')" style="flex: 1; padding: 1rem; background: none; border: none; color: var(--text-secondary); cursor: pointer;">Музыка</button>
         </div>
         
-        <div class="admin-content">
+        <div class="admin-content" style="padding: 2rem;">
             <!-- ВКЛАДКА ПРОФИЛЬ -->
             <div id="tab-profile" class="tab-content active">
                 <div class="form-group">
@@ -872,69 +640,32 @@
                     <label class="form-label">Аватар (URL):</label>
                     <input type="text" class="form-input" id="adminAvatar" value="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop">
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Подписчики:</label>
-                    <input type="number" class="form-input" id="adminFollowers" value="1500">
-                </div>
-                <div class="admin-actions">
-                    <button class="btn-primary" onclick="saveProfile()">
-                        <i class="fas fa-save"></i> Сохранить профиль
+                <div class="admin-actions" style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button class="btn-primary" onclick="saveProfile()" style="padding: 12px 24px; background: var(--accent); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer;">
+                        <i class="fas fa-save"></i> Сохранить
                     </button>
-                    <button class="btn-secondary" onclick="closeAdminPanel()">Отмена</button>
+                    <button class="btn-secondary" onclick="closeAdminPanel()" style="padding: 12px 24px; background: var(--bg-secondary); border: 1px solid var(--border); border-radius: 10px; color: var(--text-primary); cursor: pointer;">Отмена</button>
                 </div>
             </div>
             
             <!-- ВКЛАДКА ССЫЛКИ -->
             <div id="tab-links" class="tab-content">
-                <div class="links-list" id="adminLinksList">
+                <div class="links-list" id="adminLinksList" style="max-height: 300px; overflow-y: auto; margin: 1rem 0; padding: 1rem; background: var(--bg-secondary); border-radius: 12px;">
                     <!-- Ссылки для редактирования -->
                 </div>
-                <button class="btn-primary" onclick="addNewLink()" style="width: 100%; margin-top: 1rem;">
+                <button class="btn-primary" onclick="addNewLink()" style="width: 100%; padding: 12px; background: var(--accent); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; margin-top: 1rem;">
                     <i class="fas fa-plus"></i> Добавить новую ссылку
                 </button>
             </div>
             
             <!-- ВКЛАДКА МУЗЫКА -->
             <div id="tab-music" class="tab-content">
-                <div class="music-list" id="adminMusicList">
+                <div class="music-list" id="adminMusicList" style="max-height: 300px; overflow-y: auto; margin: 1rem 0; padding: 1rem; background: var(--bg-secondary); border-radius: 12px;">
                     <!-- Музыка для редактирования -->
                 </div>
-                <button class="btn-primary" onclick="addNewTrack()" style="width: 100%; margin-top: 1rem;">
+                <button class="btn-primary" onclick="addNewTrack()" style="width: 100%; padding: 12px; background: var(--accent); border: none; border-radius: 10px; color: white; font-weight: 600; cursor: pointer; margin-top: 1rem;">
                     <i class="fas fa-plus"></i> Добавить новый трек
                 </button>
-            </div>
-            
-            <!-- ВКЛАДКА ПОСТЫ -->
-            <div id="tab-posts" class="tab-content">
-                <div class="posts-list" id="adminPostsList">
-                    <!-- Посты для редактирования -->
-                </div>
-                <button class="btn-primary" onclick="createNewPost()" style="width: 100%; margin-top: 1rem;">
-                    <i class="fas fa-plus"></i> Создать новый пост
-                </button>
-            </div>
-            
-            <!-- ВКЛАДКА НАСТРОЙКИ -->
-            <div id="tab-settings" class="tab-content">
-                <div class="form-group">
-                    <label class="form-label">Пароль администратора:</label>
-                    <input type="password" class="form-input" id="adminPassword" placeholder="Новый пароль">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Экспорт данных:</label>
-                    <button class="btn-secondary" onclick="exportData()" style="width: 100%;">
-                        <i class="fas fa-download"></i> Скачать резервную копию
-                    </button>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Импорт данных:</label>
-                    <input type="file" class="form-input" id="importFile" accept=".json">
-                </div>
-                <div class="admin-actions">
-                    <button class="btn-primary" onclick="saveSettings()">
-                        <i class="fas fa-save"></i> Сохранить настройки
-                    </button>
-                </div>
             </div>
         </div>
     </div>
@@ -942,7 +673,7 @@
     <!-- СКРИПТЫ -->
     <script>
         // ===== КОНСТАНТЫ =====
-        const ADMIN_PASSWORD = 'moros2024'; // Пароль для админки
+        const ADMIN_PASSWORD = 'moros2024';
         
         // ===== ДАННЫЕ =====
         let siteData = {
@@ -955,54 +686,93 @@
             links: [
                 { id: 1, title: 'Telegram', url: 'https://t.me/moros_channel', icon: 'fab fa-telegram', desc: 'Основной канал' },
                 { id: 2, title: 'GitHub', url: 'https://github.com/moros', icon: 'fab fa-github', desc: 'Исходный код' },
-                { id: 3, title: 'YouTube', url: 'https://youtube.com/@moros', icon: 'fab fa-youtube', desc: 'Видео и стримы' },
-                { id: 4, title: 'Discord', url: 'https://discord.gg/moros', icon: 'fab fa-discord', desc: 'Сообщество' },
-                { id: 5, title: 'Spotify', url: 'https://open.spotify.com/user/moros', icon: 'fab fa-spotify', desc: 'Плейлисты' },
-                { id: 6, title: 'VK', url: 'https://vk.com/moros', icon: 'fab fa-vk', desc: 'Социальная сеть' }
+                { id: 3, title: 'YouTube', url: 'https://youtube.com/@moros', icon: 'fab fa-youtube', desc: 'Видео и стримы' }
             ],
             music: [
-                { id: 1, title: 'Lose Yourself', artist: 'Eminem', playing: true },
-                { id: 2, title: 'Bohemian Rhapsody', artist: 'Queen', playing: false },
-                { id: 3, title: 'Shape of You', artist: 'Ed Sheeran', playing: false },
-                { id: 4, title: 'Blinding Lights', artist: 'The Weeknd', playing: false }
+                { 
+                    id: 1, 
+                    title: 'Lo-fi Study Music', 
+                    artist: 'Chillhop Music',
+                    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3',
+                    playing: true 
+                },
+                { 
+                    id: 2, 
+                    title: 'Ambient Relaxation', 
+                    artist: 'Meditation Music',
+                    url: 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3',
+                    playing: false 
+                }
             ],
             posts: [
                 { 
                     id: 1, 
                     author: 'Moros Network',
                     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop',
-                    content: 'Только что запустил новую версию сайта! Теперь с админ-панелью и музыкальным плеером. Что думаете?',
+                    content: 'Только что запустил новую версию сайта! Теперь с работающим музыкальным плеером и улучшенным дизайном.',
                     likes: 42,
-                    comments: 8,
-                    shares: 3,
+                    likedByUser: false,
                     time: '2 часа назад',
-                    image: ''
+                    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop&q=80'
                 },
                 { 
                     id: 2, 
                     author: 'Moros Network',
                     avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop',
-                    content: 'Работаю над новым проектом в области веб-разработки. Скоро будут анонсы! Кто с нетерпением ждет?',
+                    content: 'Работаю над новым проектом в области веб-разработки. Скоро будут анонсы!',
                     likes: 28,
-                    comments: 5,
-                    shares: 1,
+                    likedByUser: false,
                     time: '1 день назад',
-                    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop'
+                    image: ''
                 }
             ]
         };
         
+        // ===== ПЕРЕМЕННЫЕ МУЗЫКАЛЬНОГО ПЛЕЕРА =====
+        let audioPlayer = null;
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+        let currentImageUrl = '';
+        
         // ===== ИНИЦИАЛИЗАЦИЯ =====
         document.addEventListener('DOMContentLoaded', function() {
             loadData();
+            initAudioPlayer();
             renderAll();
             updateStats();
             
-            // Автоматическое сохранение каждые 30 секунд
-            setInterval(saveToLocalStorage, 30000);
-            
-            console.log('Moros Network загружен! Пароль админа:', ADMIN_PASSWORD);
+            // Горячие клавиши
+            document.addEventListener('keydown', function(e) {
+                if (e.altKey && e.key === 'a') {
+                    e.preventDefault();
+                    openAdminPanel();
+                }
+                if (e.key === 'Escape') {
+                    closeAdminPanel();
+                    closeImageModal();
+                }
+                if (e.key === ' ') {
+                    e.preventDefault();
+                    togglePlay();
+                }
+            });
         });
+        
+        // ===== ИНИЦИАЛИЗАЦИЯ АУДИО ПЛЕЕРА =====
+        function initAudioPlayer() {
+            audioPlayer = document.getElementById('audioPlayer');
+            
+            audioPlayer.addEventListener('ended', function() {
+                playNext();
+            });
+            
+            audioPlayer.addEventListener('loadedmetadata', function() {
+                updateProgress();
+            });
+            
+            // Автосохранение
+            setInterval(saveToLocalStorage, 30000);
+        }
         
         // ===== РЕНДЕРИНГ =====
         function renderAll() {
@@ -1030,6 +800,7 @@
                 linkEl.href = link.url;
                 linkEl.target = '_blank';
                 linkEl.className = 'social-link';
+                linkEl.style.marginBottom = '0.5rem';
                 linkEl.innerHTML = `
                     <div class="link-icon">
                         <i class="${link.icon}"></i>
@@ -1038,18 +809,53 @@
                         <h4>${link.title}</h4>
                         <span>${link.desc}</span>
                     </div>
-                    <i class="fas fa-arrow-right" style="color: var(--text-secondary);"></i>
                 `;
                 container.appendChild(linkEl);
             });
         }
         
         function renderMusic() {
+            const playlist = document.getElementById('playlist');
+            if (!playlist) return;
+            
+            playlist.innerHTML = '';
+            
             const currentTrack = siteData.music.find(track => track.playing);
             if (currentTrack) {
                 document.getElementById('currentTrack').textContent = currentTrack.title;
                 document.getElementById('currentArtist').textContent = currentTrack.artist;
+                
+                if (audioPlayer && audioPlayer.src !== currentTrack.url) {
+                    audioPlayer.src = currentTrack.url;
+                    if (isPlaying) {
+                        audioPlayer.play().catch(e => console.log('Auto-play prevented'));
+                    }
+                }
             }
+            
+            siteData.music.forEach((track, index) => {
+                const trackEl = document.createElement('div');
+                trackEl.className = 'social-link';
+                trackEl.style.marginBottom = '0.5rem';
+                trackEl.style.cursor = 'pointer';
+                trackEl.style.backgroundColor = track.playing ? 'var(--accent-light)' : '';
+                trackEl.style.borderColor = track.playing ? 'var(--accent)' : '';
+                trackEl.onclick = () => playTrack(index);
+                
+                trackEl.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 1rem; width: 100%;">
+                        <div style="width: 30px; height: 30px; background: ${track.playing ? 'var(--accent)' : 'var(--bg-hover)'}; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white;">
+                            ${index + 1}
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 500; color: ${track.playing ? 'var(--accent)' : 'var(--text-primary)'};">${track.title}</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">${track.artist}</div>
+                        </div>
+                        ${track.playing ? '<i class="fas fa-play" style="color: var(--accent);"></i>' : ''}
+                    </div>
+                `;
+                playlist.appendChild(trackEl);
+            });
         }
         
         function renderPosts() {
@@ -1059,7 +865,7 @@
             container.innerHTML = '';
             siteData.posts.forEach(post => {
                 const postEl = document.createElement('article');
-                postEl.className = 'post-card fade-in';
+                postEl.className = 'post-card';
                 postEl.innerHTML = `
                     <div class="post-header">
                         <div class="post-author">
@@ -1069,30 +875,21 @@
                                 <span>${post.time}</span>
                             </div>
                         </div>
-                        <div class="post-menu">
-                            <button class="menu-btn">
-                                <i class="fas fa-ellipsis-h"></i>
-                            </button>
-                        </div>
                     </div>
                     <div class="post-content">
                         ${post.content}
                     </div>
-                    ${post.image ? `<img src="${post.image}" alt="Изображение" class="post-image">` : ''}
+                    ${post.image ? `
+                        <img src="${post.image}" alt="Изображение" class="post-image" onclick="openImageModal('${post.image}')">
+                    ` : ''}
                     <div class="post-footer">
                         <div class="post-stats">
-                            <button class="stat-btn like-btn" onclick="likePost(${post.id})">
+                            <button class="stat-btn ${post.likedByUser ? 'liked' : ''}" onclick="likePost(${post.id})">
                                 <i class="fas fa-heart"></i> ${post.likes}
                             </button>
-                            <button class="stat-btn" onclick="commentPost(${post.id})">
-                                <i class="fas fa-comment"></i> ${post.comments}
-                            </button>
-                            <button class="stat-btn" onclick="sharePost(${post.id})">
-                                <i class="fas fa-share"></i> ${post.shares}
-                            </button>
                         </div>
-                        <button class="icon-btn" onclick="savePost(${post.id})">
-                            <i class="fas fa-bookmark"></i>
+                        <button class="icon-btn" onclick="deletePost(${post.id})" title="Удалить пост">
+                            <i class="fas fa-trash"></i>
                         </button>
                     </div>
                 `;
@@ -1103,7 +900,6 @@
         function renderAdminLists() {
             renderAdminLinks();
             renderAdminMusic();
-            renderAdminPosts();
         }
         
         function renderAdminLinks() {
@@ -1114,16 +910,17 @@
             siteData.links.forEach(link => {
                 const item = document.createElement('div');
                 item.className = 'admin-item';
+                item.style.display = 'flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-card); border-radius: 10px; margin-bottom: 0.8rem;';
                 item.innerHTML = `
                     <div>
                         <strong>${link.title}</strong>
                         <div style="color: var(--text-secondary); font-size: 0.9rem;">${link.url}</div>
                     </div>
-                    <div class="item-actions">
-                        <button class="item-btn" onclick="editLink(${link.id})">
+                    <div style="display: flex; gap: 8px;">
+                        <button class="item-btn" onclick="editLink(${link.id})" style="width: 36px; height: 36px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer;">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="item-btn" onclick="deleteLink(${link.id})">
+                        <button class="item-btn" onclick="deleteLink(${link.id})" style="width: 36px; height: 36px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer;">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -1140,41 +937,18 @@
             siteData.music.forEach(track => {
                 const item = document.createElement('div');
                 item.className = 'admin-item';
-                item.innerHTML = `
-                    <div>
-                        <strong>${track.title}</strong>
-                        <div style="color: var(--text-secondary); font-size: 0.9rem;">${track.artist}</div>
-                    </div>
-                    <div class="item-actions">
-                        <button class="item-btn" onclick="setCurrentTrack(${track.id})">
-                            <i class="fas fa-play"></i>
-                        </button>
-                        <button class="item-btn" onclick="deleteTrack(${track.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                `;
-                container.appendChild(item);
-            });
-        }
-        
-        function renderAdminPosts() {
-            const container = document.getElementById('adminPostsList');
-            if (!container) return;
-            
-            container.innerHTML = '';
-            siteData.posts.forEach(post => {
-                const item = document.createElement('div');
-                item.className = 'admin-item';
+                item.style.display = 'flex; justify-content: space-between; align-items: center; padding: 1rem; background: var(--bg-card); border-radius: 10px; margin-bottom: 0.8rem;';
                 item.innerHTML = `
                     <div style="flex: 1;">
-                        <strong>${post.content.substring(0, 50)}...</strong>
-                        <div style="color: var(--text-secondary); font-size: 0.9rem;">
-                            ${post.time} • ❤️ ${post.likes}
-                        </div>
+                        <strong>${track.title}</strong>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">${track.artist}</div>
+                        <div style="color: var(--text-muted); font-size: 0.8rem; margin-top: 0.3rem;">${track.url}</div>
                     </div>
-                    <div class="item-actions">
-                        <button class="item-btn" onclick="deletePost(${post.id})">
+                    <div style="display: flex; gap: 8px;">
+                        <button class="item-btn" onclick="setCurrentTrack(${track.id})" style="width: 36px; height: 36px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer;">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="item-btn" onclick="deleteTrack(${track.id})" style="width: 36px; height: 36px; border-radius: 8px; background: var(--bg-secondary); border: 1px solid var(--border); color: var(--text-secondary); cursor: pointer;">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>
@@ -1185,7 +959,194 @@
         
         function updateStats() {
             document.getElementById('postsCount').textContent = siteData.posts.length;
-            document.getElementById('linksCount').textContent = siteData.links.length;
+        }
+        
+        // ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР =====
+        function playTrack(index) {
+            siteData.music.forEach((track, i) => {
+                track.playing = i === index;
+            });
+            
+            currentTrackIndex = index;
+            const track = siteData.music[index];
+            
+            audioPlayer.src = track.url;
+            audioPlayer.play();
+            isPlaying = true;
+            
+            document.getElementById('playBtn').className = 'fas fa-pause';
+            document.getElementById('currentTrack').textContent = track.title;
+            document.getElementById('currentArtist').textContent = track.artist;
+            
+            saveToLocalStorage();
+            renderMusic();
+        }
+        
+        function togglePlay() {
+            if (!siteData.music.length) {
+                alert('Добавьте треки в админ-панели!');
+                return;
+            }
+            
+            if (!audioPlayer.src) {
+                playTrack(0);
+                return;
+            }
+            
+            if (isPlaying) {
+                audioPlayer.pause();
+                document.getElementById('playBtn').className = 'fas fa-play';
+            } else {
+                audioPlayer.play();
+                document.getElementById('playBtn').className = 'fas fa-pause';
+            }
+            
+            isPlaying = !isPlaying;
+        }
+        
+        function playNext() {
+            if (!siteData.music.length) return;
+            
+            const nextIndex = (currentTrackIndex + 1) % siteData.music.length;
+            playTrack(nextIndex);
+        }
+        
+        function playPrev() {
+            if (!siteData.music.length) return;
+            
+            const prevIndex = currentTrackIndex === 0 ? siteData.links.length - 1 : currentTrackIndex - 1;
+            playTrack(prevIndex);
+        }
+        
+        function stopAudio() {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            isPlaying = false;
+            document.getElementById('playBtn').className = 'fas fa-play';
+            updateProgress();
+        }
+        
+        function updateProgress() {
+            if (!audioPlayer.duration) return;
+            
+            const progress = (audioPlayer.currentTime / audioPlayer.duration) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+        }
+        
+        function seekAudio(event) {
+            if (!audioPlayer.duration) return;
+            
+            const progressContainer = event.currentTarget;
+            const clickPosition = event.offsetX;
+            const containerWidth = progressContainer.clientWidth;
+            const seekTime = (clickPosition / containerWidth) * audioPlayer.duration;
+            
+            audioPlayer.currentTime = seekTime;
+            updateProgress();
+        }
+        
+        function setCurrentTrack(id) {
+            const index = siteData.music.findIndex(track => track.id === id);
+            if (index !== -1) {
+                playTrack(index);
+            }
+        }
+        
+        // ===== ПОСТЫ И ИЗОБРАЖЕНИЯ =====
+        function addImageToPost() {
+            document.getElementById('imageUpload').click();
+        }
+        
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                currentImageUrl = e.target.result;
+                document.getElementById('imagePreview').innerHTML = `
+                    <div style="position: relative; display: inline-block;">
+                        <img src="${currentImageUrl}" style="max-width: 200px; border-radius: 10px; margin-top: 0.5rem;">
+                        <button onclick="removeImage()" style="position: absolute; top: 5px; right: 5px; background: rgba(0,0,0,0.7); color: white; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer;">×</button>
+                    </div>
+                `;
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function removeImage() {
+            currentImageUrl = '';
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('imageUpload').value = '';
+        }
+        
+        function clearPost() {
+            document.getElementById('newPostContent').value = '';
+            removeImage();
+        }
+        
+        function publishPost() {
+            const content = document.getElementById('newPostContent').value.trim();
+            if (!content) {
+                alert('Введите текст поста!');
+                return;
+            }
+            
+            const newPost = {
+                id: Date.now(),
+                author: siteData.profile.name,
+                avatar: siteData.profile.avatar,
+                content: content,
+                likes: 0,
+                likedByUser: false,
+                time: 'Только что',
+                image: currentImageUrl || ''
+            };
+            
+            siteData.posts.unshift(newPost);
+            saveToLocalStorage();
+            renderPosts();
+            updateStats();
+            
+            document.getElementById('newPostContent').value = '';
+            removeImage();
+            
+            alert('Пост опубликован!');
+        }
+        
+        function likePost(id) {
+            const post = siteData.posts.find(p => p.id === id);
+            if (!post) return;
+            
+            if (post.likedByUser) {
+                post.likes--;
+                post.likedByUser = false;
+            } else {
+                post.likes++;
+                post.likedByUser = true;
+            }
+            
+            saveToLocalStorage();
+            renderPosts();
+        }
+        
+        function deletePost(id) {
+            if (confirm('Удалить этот пост?')) {
+                siteData.posts = siteData.posts.filter(post => post.id !== id);
+                saveToLocalStorage();
+                renderPosts();
+                updateStats();
+            }
+        }
+        
+        // ===== ИЗОБРАЖЕНИЯ =====
+        function openImageModal(imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
+        
+        function closeImageModal() {
+            document.getElementById('imageModal').style.display = 'none';
         }
         
         // ===== АДМИН-ПАНЕЛЬ =====
@@ -1195,6 +1156,11 @@
                 document.getElementById('adminOverlay').style.display = 'block';
                 document.getElementById('adminPanel').style.display = 'block';
                 renderAdminLists();
+                
+                // Заполняем поля профиля
+                document.getElementById('adminName').value = siteData.profile.name;
+                document.getElementById('adminBio').value = siteData.profile.bio;
+                document.getElementById('adminAvatar').value = siteData.profile.avatar;
             } else if (password !== null) {
                 alert('Неверный пароль!');
             }
@@ -1206,7 +1172,6 @@
         }
         
         function switchTab(tabName) {
-            // Скрыть все вкладки
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
@@ -1215,14 +1180,8 @@
                 tab.classList.remove('active');
             });
             
-            // Показать выбранную вкладку
             document.getElementById('tab-' + tabName).classList.add('active');
             event.target.classList.add('active');
-        }
-        
-        function openTab(tabName) {
-            openAdminPanel();
-            setTimeout(() => switchTab(tabName), 100);
         }
         
         // ===== УПРАВЛЕНИЕ ДАННЫМИ =====
@@ -1230,21 +1189,22 @@
             siteData.profile.name = document.getElementById('adminName').value;
             siteData.profile.bio = document.getElementById('adminBio').value;
             siteData.profile.avatar = document.getElementById('adminAvatar').value;
-            siteData.profile.followers = parseInt(document.getElementById('adminFollowers').value) || 0;
             
             saveToLocalStorage();
             renderProfile();
+            renderPosts();
+            closeAdminPanel();
             alert('Профиль сохранен!');
         }
         
         function addNewLink() {
-            const title = prompt('Название ссылки (например: Telegram):', '');
+            const title = prompt('Название ссылки:', '');
             if (!title) return;
             
             const url = prompt('URL ссылки:', 'https://');
             if (!url) return;
             
-            const desc = prompt('Описание:', 'Моя социальная сеть');
+            const desc = prompt('Описание:', '');
             
             const newLink = {
                 id: Date.now(),
@@ -1258,7 +1218,6 @@
             saveToLocalStorage();
             renderLinks();
             renderAdminLinks();
-            updateStats();
             alert('Ссылка добавлена!');
         }
         
@@ -1286,7 +1245,6 @@
                 saveToLocalStorage();
                 renderLinks();
                 renderAdminLinks();
-                updateStats();
             }
         }
         
@@ -1297,10 +1255,14 @@
             const artist = prompt('Исполнитель:', '');
             if (!artist) return;
             
+            const url = prompt('URL аудио файла (MP3):', 'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+            if (!url) return;
+            
             const newTrack = {
                 id: Date.now(),
                 title: title,
                 artist: artist,
+                url: url,
                 playing: false
             };
             
@@ -1308,148 +1270,23 @@
             saveToLocalStorage();
             renderMusic();
             renderAdminMusic();
-            alert('Трек добавлен!');
-        }
-        
-        function setCurrentTrack(id) {
-            siteData.music.forEach(track => {
-                track.playing = track.id === id;
-            });
-            saveToLocalStorage();
-            renderMusic();
-            alert('Трек установлен как текущий!');
+            alert('Трек добавлен! Теперь его можно воспроизвести.');
         }
         
         function deleteTrack(id) {
             if (confirm('Удалить этот трек?')) {
+                const wasPlaying = siteData.music.find(track => track.id === id)?.playing;
                 siteData.music = siteData.music.filter(track => track.id !== id);
+                
+                if (wasPlaying && siteData.music.length > 0) {
+                    siteData.music[0].playing = true;
+                    playTrack(0);
+                }
+                
                 saveToLocalStorage();
                 renderMusic();
                 renderAdminMusic();
             }
-        }
-        
-        function createNewPost() {
-            const content = prompt('Текст поста:', '');
-            if (!content) return;
-            
-            const newPost = {
-                id: Date.now(),
-                author: siteData.profile.name,
-                avatar: siteData.profile.avatar,
-                content: content,
-                likes: 0,
-                comments: 0,
-                shares: 0,
-                time: 'Только что',
-                image: ''
-            };
-            
-            siteData.posts.unshift(newPost);
-            saveToLocalStorage();
-            renderPosts();
-            updateStats();
-            alert('Пост опубликован!');
-        }
-        
-        function publishPost() {
-            const content = document.getElementById('newPostContent').value.trim();
-            if (!content) {
-                alert('Введите текст поста!');
-                return;
-            }
-            
-            createNewPostFromContent(content);
-            document.getElementById('newPostContent').value = '';
-        }
-        
-        function createNewPostFromContent(content) {
-            const newPost = {
-                id: Date.now(),
-                author: siteData.profile.name,
-                avatar: siteData.profile.avatar,
-                content: content,
-                likes: 0,
-                comments: 0,
-                shares: 0,
-                time: 'Только что',
-                image: ''
-            };
-            
-            siteData.posts.unshift(newPost);
-            saveToLocalStorage();
-            renderPosts();
-            updateStats();
-        }
-        
-        function deletePost(id) {
-            if (confirm('Удалить этот пост?')) {
-                siteData.posts = siteData.posts.filter(post => post.id !== id);
-                saveToLocalStorage();
-                renderPosts();
-                renderAdminPosts();
-                updateStats();
-            }
-        }
-        
-        function likePost(id) {
-            const post = siteData.posts.find(p => p.id === id);
-            if (post) {
-                post.likes++;
-                saveToLocalStorage();
-                renderPosts();
-                renderAdminPosts();
-            }
-        }
-        
-        function commentPost(id) {
-            const comment = prompt('Ваш комментарий:', '');
-            if (comment) {
-                const post = siteData.posts.find(p => p.id === id);
-                if (post) {
-                    post.comments++;
-                    saveToLocalStorage();
-                    renderPosts();
-                    alert('Комментарий добавлен!');
-                }
-            }
-        }
-        
-        function sharePost(id) {
-            const post = siteData.posts.find(p => p.id === id);
-            if (post) {
-                post.shares++;
-                saveToLocalStorage();
-                renderPosts();
-                alert('Пост расшарен!');
-            }
-        }
-        
-        // ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР =====
-        function playPrev() {
-            let currentIndex = siteData.music.findIndex(track => track.playing);
-            if (currentIndex === -1) currentIndex = 0;
-            
-            const prevIndex = currentIndex === 0 ? siteData.music.length - 1 : currentIndex - 1;
-            setCurrentTrack(siteData.music[prevIndex].id);
-        }
-        
-        function togglePlay() {
-            const btn = document.getElementById('playBtn');
-            if (btn.classList.contains('fa-play')) {
-                btn.className = 'fas fa-pause';
-                // Здесь можно добавить реальное воспроизведение
-            } else {
-                btn.className = 'fas fa-play';
-            }
-        }
-        
-        function playNext() {
-            let currentIndex = siteData.music.findIndex(track => track.playing);
-            if (currentIndex === -1) currentIndex = 0;
-            
-            const nextIndex = (currentIndex + 1) % siteData.music.length;
-            setCurrentTrack(siteData.music[nextIndex].id);
         }
         
         // ===== СОХРАНЕНИЕ ДАННЫХ =====
@@ -1460,48 +1297,19 @@
         function loadData() {
             const saved = localStorage.getItem('moros_network_data');
             if (saved) {
-                siteData = JSON.parse(saved);
-            }
-        }
-        
-        function exportData() {
-            const dataStr = JSON.stringify(siteData, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'moros-network-backup.json';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            
-            alert('Данные экспортированы!');
-        }
-        
-        function saveSettings() {
-            const newPassword = document.getElementById('adminPassword').value;
-            if (newPassword) {
-                alert('Пароль изменен на: ' + newPassword);
-                // В реальном приложении нужно сохранять пароль
-            }
-            
-            const importFile = document.getElementById('importFile').files[0];
-            if (importFile) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const imported = JSON.parse(e.target.result);
-                        siteData = imported;
-                        saveToLocalStorage();
-                        renderAll();
-                        updateStats();
-                        alert('Данные импортированы!');
-                    } catch (error) {
-                        alert('Ошибка импорта: ' + error.message);
-                    }
-                };
-                reader.readAsText(importFile);
+                const parsed = JSON.parse(saved);
+                
+                // Обновляем только если структура совместима
+                if (parsed.profile) siteData.profile = parsed.profile;
+                if (parsed.links) siteData.links = parsed.links;
+                if (parsed.music) siteData.music = parsed.music;
+                if (parsed.posts) {
+                    // Обновляем старые посты для новой структуры
+                    siteData.posts = parsed.posts.map(post => ({
+                        ...post,
+                        likedByUser: post.likedByUser || false
+                    }));
+                }
             }
         }
         
@@ -1512,17 +1320,6 @@
             }
             return num;
         }
-        
-        // Горячие клавиши
-        document.addEventListener('keydown', function(e) {
-            if (e.altKey && e.key === 'a') {
-                e.preventDefault();
-                openAdminPanel();
-            }
-            if (e.key === 'Escape') {
-                closeAdminPanel();
-            }
-        });
     </script>
 </body>
 </html>
