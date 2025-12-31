@@ -3,21 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Links | Портфолио</title>
+    <title>Moros Network | Моя цифровая визитка</title>
     
-    <!-- ВСТРАИВАЕМ CSS ПРЯМО В HTML (чтобы точно работало) -->
+    <!-- ВСТРАИВАЕМ ВСЁ В ОДИН ФАЙЛ -->
     <style>
-        /* ===== БАЗОВЫЕ СТИЛИ ===== */
+        /* ===== СБРОС И БАЗОВЫЕ СТИЛИ ===== */
         :root {
-            --bg-color: #0f1419;
-            --card-bg: #1a2029;
-            --text-color: #e1e8ed;
-            --text-secondary: #8a9ba8;
-            --accent-color: #7b68ee;
-            --accent-light: #9370db;
-            --border-color: #2d3748;
-            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-            --gradient: linear-gradient(135deg, #7b68ee 0%, #9370db 100%);
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #151520;
+            --bg-card: #1e1e2d;
+            --bg-hover: #2a2a3a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0c0;
+            --text-muted: #6c6c8a;
+            --accent: #7d5fff;
+            --accent-hover: #8d6eff;
+            --accent-light: rgba(125, 95, 255, 0.1);
+            --success: #00d4aa;
+            --warning: #ffb74d;
+            --danger: #ff6b8b;
+            --border: #2d2d42;
+            --border-light: #3a3a50;
+            --shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.4);
+            --gradient: linear-gradient(135deg, #7d5fff 0%, #a855f7 100%);
+            --gradient-dark: linear-gradient(135deg, #1e1e2d 0%, #151520 100%);
         }
         
         * {
@@ -27,246 +37,261 @@
         }
         
         body {
-            font-family: 'Inter', system-ui, -apple-system, sans-serif;
-            background: var(--bg-color);
-            color: var(--text-color);
+            font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
             line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        /* ===== КОНТЕЙНЕР И СЕТКА ===== */
+        .app-container {
+            display: grid;
+            grid-template-columns: 280px 1fr 350px;
+            gap: 2rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem;
             min-height: 100vh;
         }
         
-        /* ===== КОНТЕЙНЕР ===== */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 2rem;
+        /* ===== БОКОВАЯ ПАНЕЛЬ ===== */
+        .sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
         }
         
-        /* ===== ПРОФИЛЬ ===== */
-        .profile {
-            text-align: center;
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: var(--card-bg);
+        .profile-card {
+            background: var(--bg-card);
             border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border);
             box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
+            text-align: center;
+            transition: transform 0.3s ease;
         }
         
-        .avatar {
+        .profile-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .avatar-container {
+            position: relative;
             width: 120px;
             height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid var(--accent-color);
-            margin-bottom: 1rem;
-        }
-        
-        .name {
-            font-size: 2.2rem;
-            background: var(--gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
-        }
-        
-        .bio {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-            max-width: 600px;
             margin: 0 auto 1.5rem;
         }
         
-        /* ===== ССЫЛКИ ===== */
-        .links-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1rem;
-            margin-bottom: 3rem;
+        .avatar {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent);
+            box-shadow: 0 0 0 8px rgba(125, 95, 255, 0.2);
         }
         
-        .link-card {
-            background: var(--card-bg);
-            border-radius: 15px;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 1.2rem;
-            text-decoration: none;
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            transition: all 0.3s ease;
-            box-shadow: var(--shadow);
+        .online-status {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 50%;
+            border: 3px solid var(--bg-card);
         }
         
-        .link-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-color);
-            box-shadow: 0 15px 40px rgba(123, 104, 238, 0.2);
+        .profile-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
-        .link-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            background: rgba(123, 104, 238, 0.1);
-            color: var(--accent-color);
-        }
-        
-        .link-content {
-            flex: 1;
-        }
-        
-        .link-title {
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-        }
-        
-        .link-desc {
+        .profile-bio {
             color: var(--text-secondary);
+            margin-bottom: 1.5rem;
             font-size: 0.95rem;
         }
         
-        .link-arrow {
-            color: var(--text-secondary);
-            font-size: 1.2rem;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-        
-        .link-card:hover .link-arrow {
-            opacity: 1;
-            color: var(--accent-color);
-            transform: translateX(5px);
-        }
-        
-        /* ===== МУЗЫКА ===== */
-        .music-section {
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
-        }
-        
-        .section-title {
+        .stats {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
+            justify-content: space-around;
+            margin: 1.5rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
         }
         
-        .section-title i {
-            color: var(--accent-color);
+        .stat {
+            text-align: center;
         }
         
-        .music-player {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+        .stat-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--accent);
         }
         
-        .now-playing {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1rem;
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.3rem;
         }
         
-        .track-cover {
-            width: 80px;
-            height: 80px;
-            border-radius: 10px;
-            background: var(--gradient);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: white;
-        }
-        
-        .track-info h3 {
-            margin-bottom: 0.3rem;
-        }
-        
-        .track-info p {
-            color: var(--text-secondary);
-        }
-        
-        .player-controls {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        
-        .control-btn {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            border: none;
-            background: var(--accent-color);
-            color: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-        
-        .control-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.4);
-        }
-        
-        .playlist {
+        .quick-actions {
             display: flex;
             flex-direction: column;
             gap: 0.8rem;
         }
         
-        .playlist-track {
+        .action-btn {
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            padding: 1rem;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
         }
         
-        .playlist-track:hover {
-            background: rgba(123, 104, 238, 0.1);
+        .action-btn:hover {
+            background: var(--accent);
+            transform: translateX(5px);
         }
         
-        /* ===== ПОСТЫ ===== */
-        .posts-section {
-            background: var(--card-bg);
+        .action-btn i {
+            font-size: 1.1rem;
+        }
+        
+        .music-widget {
+            background: var(--bg-card);
             border-radius: 20px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            border: 1px solid var(--border);
         }
         
-        .posts-grid {
+        .music-widget h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .current-track {
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .track-info h4 {
+            margin-bottom: 0.3rem;
+        }
+        
+        .track-info p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        /* ===== ОСНОВНАЯ ЛЕНТА ===== */
+        .main-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .create-post {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .post-input {
+            width: 100%;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            color: var(--text-primary);
+            font-family: inherit;
+            resize: vertical;
+            min-height: 80px;
+            margin-bottom: 1rem;
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .attachment-btns {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .icon-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .post-submit {
+            padding: 10px 24px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .post-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(125, 95, 255, 0.3);
+        }
+        
+        .feed {
             display: flex;
             flex-direction: column;
             gap: 1.5rem;
         }
         
         .post-card {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 15px;
+            background: var(--bg-card);
+            border-radius: 20px;
             padding: 1.5rem;
-            border-left: 4px solid var(--accent-color);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease;
+        }
+        
+        .post-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
         }
         
         .post-header {
@@ -276,362 +301,1228 @@
             margin-bottom: 1rem;
         }
         
-        .post-date {
+        .post-author {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .author-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        
+        .author-info h4 {
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info span {
             color: var(--text-secondary);
             font-size: 0.9rem;
         }
         
-        .post-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--text-color);
+        .post-menu {
+            position: relative;
+        }
+        
+        .menu-btn {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 5px;
         }
         
         .post-content {
-            color: var(--text-secondary);
+            margin-bottom: 1rem;
             line-height: 1.7;
         }
         
-        /* ===== КНОПКИ УПРАВЛЕНИЯ ===== */
-        .admin-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--gradient);
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.5rem;
-            box-shadow: 0 10px 30px rgba(123, 104, 238, 0.4);
-            transition: all 0.3s ease;
-            z-index: 1000;
+        .post-image {
+            width: 100%;
+            border-radius: 12px;
+            margin: 1rem 0;
+            max-height: 400px;
+            object-fit: cover;
         }
         
-        .admin-btn:hover {
-            transform: scale(1.1) rotate(90deg);
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+        
+        .post-stats {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .stat-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .stat-btn:hover {
+            color: var(--accent);
+        }
+        
+        .stat-btn.liked {
+            color: var(--danger);
+        }
+        
+        /* ===== ПРАВАЯ ПАНЕЛЬ ===== */
+        .right-sidebar {
+            position: sticky;
+            top: 2rem;
+            height: fit-content;
+        }
+        
+        .links-section {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+        }
+        
+        .section-title h3 {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .edit-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .edit-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .links-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            text-decoration: none;
+            color: var(--text-primary);
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent);
+            transform: translateX(5px);
+        }
+        
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            background: var(--accent-light);
+            color: var(--accent);
+        }
+        
+        .link-text {
+            flex: 1;
+        }
+        
+        .link-text h4 {
+            margin-bottom: 0.2rem;
+        }
+        
+        .link-text span {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .upcoming-events {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+        }
+        
+        .event {
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            margin-bottom: 1rem;
+        }
+        
+        .event-date {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* ===== АДМИН-ПАНЕЛЬ ===== */
+        .admin-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            display: none;
+            backdrop-filter: blur(10px);
+        }
+        
+        .admin-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: var(--bg-card);
+            border-radius: 24px;
+            width: 90%;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            z-index: 10001;
+            display: none;
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .admin-header {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-secondary);
+        }
+        
+        .admin-tab {
+            flex: 1;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .admin-tab.active {
+            background: var(--bg-card);
+            color: var(--accent);
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .admin-content {
+            padding: 2rem;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(125, 95, 255, 0.2);
+        }
+        
+        .admin-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .btn-primary {
+            padding: 12px 24px;
+            background: var(--gradient);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(125, 95, 255, 0.3);
+        }
+        
+        .btn-secondary {
+            padding: 12px 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: var(--text-primary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+        }
+        
+        .music-list, .links-list, .posts-list {
+            max-height: 300px;
+            overflow-y: auto;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+        }
+        
+        .admin-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-card);
+            border-radius: 10px;
+            margin-bottom: 0.8rem;
+        }
+        
+        .item-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .item-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .item-btn:hover {
+            background: var(--accent);
+            color: white;
         }
         
         /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 1200px) {
+            .app-container {
+                grid-template-columns: 250px 1fr;
+            }
+            .right-sidebar {
+                display: none;
+            }
+        }
+        
         @media (max-width: 768px) {
-            .container {
+            .app-container {
+                grid-template-columns: 1fr;
                 padding: 1rem;
             }
-            
-            .links-grid {
-                grid-template-columns: 1fr;
+            .sidebar {
+                position: static;
             }
-            
-            .name {
-                font-size: 1.8rem;
-            }
-            
-            .admin-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-            }
+        }
+        
+        /* ===== АНИМАЦИИ ===== */
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease;
         }
     </style>
     
-    <!-- Font Awesome иконки -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <!-- Шрифт Inter -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <!-- ПРОФИЛЬ -->
-        <section class="profile">
-            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400" alt="Аватар" class="avatar">
-            <h1 class="name" id="userName">Александр Моро</h1>
-            <p class="bio" id="userBio">Создаю цифровые продукты. Люблю музыку, технологии и дизайн. Здесь собраны все мои важные ссылки и проекты.</p>
-            <div class="stats">
-                <span><i class="fas fa-users"></i> 1.5K подписчиков</span>
-                <span><i class="fas fa-music"></i> 8 треков</span>
-                <span><i class="fas fa-link"></i> 12 ссылок</span>
-            </div>
-        </section>
-
-        <!-- ССЫЛКИ -->
-        <section class="links-section">
-            <h2 class="section-title"><i class="fas fa-external-link-alt"></i> Мои ссылки</h2>
-            <div class="links-grid" id="linksContainer">
-                <!-- Ссылки будут добавляться через JS -->
-            </div>
-        </section>
-
-        <!-- МУЗЫКА -->
-        <section class="music-section">
-            <h2 class="section-title"><i class="fas fa-headphones"></i> Любимая музыка</h2>
-            <div class="music-player">
-                <div class="now-playing">
-                    <div class="track-cover">
-                        <i class="fas fa-music"></i>
+    <!-- ОСНОВНОЙ ИНТЕРФЕЙС -->
+    <div class="app-container">
+        <!-- ЛЕВАЯ ПАНЕЛЬ -->
+        <aside class="sidebar">
+            <div class="profile-card">
+                <div class="avatar-container">
+                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop" alt="Аватар" class="avatar" id="profileAvatar">
+                    <div class="online-status"></div>
+                </div>
+                <h1 class="profile-name" id="profileName">Moros Network</h1>
+                <p class="profile-bio" id="profileBio">Создаю будущее. Музыка, код, дизайн. Добро пожаловать в мой цифровой мир.</p>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <div class="stat-value" id="followersCount">1.5K</div>
+                        <div class="stat-label">Подписчики</div>
                     </div>
+                    <div class="stat">
+                        <div class="stat-value" id="postsCount">24</div>
+                        <div class="stat-label">Посты</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-value" id="linksCount">8</div>
+                        <div class="stat-label">Ссылки</div>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <button class="action-btn" onclick="openAdminPanel()">
+                        <i class="fas fa-cog"></i> Настройки профиля
+                    </button>
+                    <button class="action-btn" onclick="openTab('links')">
+                        <i class="fas fa-link"></i> Управление ссылками
+                    </button>
+                    <button class="action-btn" onclick="openTab('music')">
+                        <i class="fas fa-music"></i> Редактировать музыку
+                    </button>
+                    <button class="action-btn" onclick="createNewPost()">
+                        <i class="fas fa-edit"></i> Написать пост
+                    </button>
+                </div>
+            </div>
+            
+            <div class="music-widget">
+                <h3><i class="fas fa-headphones"></i> Сейчас играет</h3>
+                <div class="current-track">
                     <div class="track-info">
-                        <h3 id="currentTrack">Выберите трек</h3>
-                        <p id="currentArtist">Нажмите на трек из списка</p>
+                        <h4 id="currentTrack">Lose Yourself</h4>
+                        <p id="currentArtist">Eminem</p>
+                    </div>
+                    <div class="player-controls" style="display: flex; gap: 10px; margin-top: 10px;">
+                        <button class="icon-btn" onclick="playPrev()"><i class="fas fa-step-backward"></i></button>
+                        <button class="icon-btn" onclick="togglePlay()"><i class="fas fa-play" id="playBtn"></i></button>
+                        <button class="icon-btn" onclick="playNext()"><i class="fas fa-step-forward"></i></button>
                     </div>
                 </div>
-                <div class="player-controls">
-                    <button class="control-btn" onclick="playPrev()"><i class="fas fa-step-backward"></i></button>
-                    <button class="control-btn" onclick="togglePlay()"><i class="fas fa-play" id="playBtn"></i></button>
-                    <button class="control-btn" onclick="playNext()"><i class="fas fa-step-forward"></i></button>
+                <div class="playlist-preview" id="playlistPreview">
+                    <!-- Превью плейлиста -->
                 </div>
             </div>
-            <div class="playlist" id="playlist">
-                <!-- Плейлист будет добавляться через JS -->
+        </aside>
+        
+        <!-- ЦЕНТРАЛЬНАЯ ЛЕНТА -->
+        <main class="main-feed">
+            <div class="create-post">
+                <textarea class="post-input" id="newPostContent" placeholder="Что у вас нового? Поделитесь с сообществом..."></textarea>
+                <div class="post-actions">
+                    <div class="attachment-btns">
+                        <button class="icon-btn"><i class="fas fa-image"></i></button>
+                        <button class="icon-btn"><i class="fas fa-music"></i></button>
+                        <button class="icon-btn"><i class="fas fa-link"></i></button>
+                        <button class="icon-btn"><i class="fas fa-smile"></i></button>
+                    </div>
+                    <button class="post-submit" onclick="publishPost()">Опубликовать</button>
+                </div>
             </div>
-        </section>
-
-        <!-- ПОСТЫ -->
-        <section class="posts-section">
-            <h2 class="section-title"><i class="fas fa-newspaper"></i> Последние посты</h2>
-            <div class="posts-grid" id="postsContainer">
-                <!-- Посты будут добавляться через JS -->
+            
+            <div class="feed" id="postsFeed">
+                <!-- Посты будут загружаться здесь -->
             </div>
-        </section>
+        </main>
+        
+        <!-- ПРАВАЯ ПАНЕЛЬ -->
+        <aside class="right-sidebar">
+            <div class="links-section">
+                <div class="section-title">
+                    <h3><i class="fas fa-external-link-alt"></i> Мои ссылки</h3>
+                    <button class="edit-btn" onclick="openTab('links')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+                <div class="links-grid" id="linksGrid">
+                    <!-- Ссылки будут загружаться здесь -->
+                </div>
+            </div>
+            
+            <div class="upcoming-events">
+                <h3><i class="fas fa-calendar-alt"></i> Ближайшие события</h3>
+                <div class="event">
+                    <div class="event-date">25 Января 2024</div>
+                    <h4>Прямой эфир в Discord</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Обсуждение новых технологий</p>
+                </div>
+                <div class="event">
+                    <div class="event-date">1 Февраля 2024</div>
+                    <h4>Запуск нового проекта</h4>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Презентация и демонстрация</p>
+                </div>
+            </div>
+            
+            <div style="margin-top: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+                <p>© 2024 Moros Network. Все права защищены.</p>
+                <p style="margin-top: 0.5rem;">Версия 2.0 • Работает на GitHub Pages</p>
+            </div>
+        </aside>
     </div>
-
-    <!-- КНОПКА АДМИНКИ -->
-    <button class="admin-btn" onclick="openAdmin()">
-        <i class="fas fa-cog"></i>
-    </button>
-
-    <!-- СКРИПТЫ ВСТРАИВАЕМ ПРЯМО В HTML -->
+    
+    <!-- АДМИН-ПАНЕЛЬ -->
+    <div class="admin-overlay" id="adminOverlay" onclick="closeAdminPanel()"></div>
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-header">
+            <h2><i class="fas fa-crown"></i> Панель администратора</h2>
+            <button class="edit-btn" onclick="closeAdminPanel()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="admin-tabs">
+            <button class="admin-tab active" onclick="switchTab('profile')">Профиль</button>
+            <button class="admin-tab" onclick="switchTab('links')">Ссылки</button>
+            <button class="admin-tab" onclick="switchTab('music')">Музыка</button>
+            <button class="admin-tab" onclick="switchTab('posts')">Посты</button>
+            <button class="admin-tab" onclick="switchTab('settings')">Настройки</button>
+        </div>
+        
+        <div class="admin-content">
+            <!-- ВКЛАДКА ПРОФИЛЬ -->
+            <div id="tab-profile" class="tab-content active">
+                <div class="form-group">
+                    <label class="form-label">Имя профиля:</label>
+                    <input type="text" class="form-input" id="adminName" value="Moros Network">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Описание:</label>
+                    <textarea class="form-input" id="adminBio" rows="3">Создаю будущее. Музыка, код, дизайн. Добро пожаловать в мой цифровой мир.</textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Аватар (URL):</label>
+                    <input type="text" class="form-input" id="adminAvatar" value="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Подписчики:</label>
+                    <input type="number" class="form-input" id="adminFollowers" value="1500">
+                </div>
+                <div class="admin-actions">
+                    <button class="btn-primary" onclick="saveProfile()">
+                        <i class="fas fa-save"></i> Сохранить профиль
+                    </button>
+                    <button class="btn-secondary" onclick="closeAdminPanel()">Отмена</button>
+                </div>
+            </div>
+            
+            <!-- ВКЛАДКА ССЫЛКИ -->
+            <div id="tab-links" class="tab-content">
+                <div class="links-list" id="adminLinksList">
+                    <!-- Ссылки для редактирования -->
+                </div>
+                <button class="btn-primary" onclick="addNewLink()" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-plus"></i> Добавить новую ссылку
+                </button>
+            </div>
+            
+            <!-- ВКЛАДКА МУЗЫКА -->
+            <div id="tab-music" class="tab-content">
+                <div class="music-list" id="adminMusicList">
+                    <!-- Музыка для редактирования -->
+                </div>
+                <button class="btn-primary" onclick="addNewTrack()" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-plus"></i> Добавить новый трек
+                </button>
+            </div>
+            
+            <!-- ВКЛАДКА ПОСТЫ -->
+            <div id="tab-posts" class="tab-content">
+                <div class="posts-list" id="adminPostsList">
+                    <!-- Посты для редактирования -->
+                </div>
+                <button class="btn-primary" onclick="createNewPost()" style="width: 100%; margin-top: 1rem;">
+                    <i class="fas fa-plus"></i> Создать новый пост
+                </button>
+            </div>
+            
+            <!-- ВКЛАДКА НАСТРОЙКИ -->
+            <div id="tab-settings" class="tab-content">
+                <div class="form-group">
+                    <label class="form-label">Пароль администратора:</label>
+                    <input type="password" class="form-input" id="adminPassword" placeholder="Новый пароль">
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Экспорт данных:</label>
+                    <button class="btn-secondary" onclick="exportData()" style="width: 100%;">
+                        <i class="fas fa-download"></i> Скачать резервную копию
+                    </button>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Импорт данных:</label>
+                    <input type="file" class="form-input" id="importFile" accept=".json">
+                </div>
+                <div class="admin-actions">
+                    <button class="btn-primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Сохранить настройки
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- СКРИПТЫ -->
     <script>
-        // Данные
-        const siteData = {
+        // ===== КОНСТАНТЫ =====
+        const ADMIN_PASSWORD = 'moros2024'; // Пароль для админки
+        
+        // ===== ДАННЫЕ =====
+        let siteData = {
             profile: {
-                name: "Александр Моро",
-                bio: "Создаю цифровые продукты. Люблю музыку, технологии и дизайн.",
-                avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400"
+                name: 'Moros Network',
+                bio: 'Создаю будущее. Музыка, код, дизайн. Добро пожаловать в мой цифровой мир.',
+                avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop',
+                followers: 1500
             },
             links: [
-                {
-                    title: "Telegram",
-                    url: "https://t.me/moros_channel",
-                    icon: "fab fa-telegram",
-                    desc: "Мой основной канал",
-                    color: "#0088cc"
-                },
-                {
-                    title: "GitHub",
-                    url: "https://github.com/moros",
-                    icon: "fab fa-github",
-                    desc: "Мои проекты и код",
-                    color: "#181717"
-                },
-                {
-                    title: "YouTube",
-                    url: "https://youtube.com/@moros",
-                    icon: "fab fa-youtube",
-                    desc: "Видео и стримы",
-                    color: "#ff0000"
-                },
-                {
-                    title: "Discord",
-                    url: "https://discord.gg/moros",
-                    icon: "fab fa-discord",
-                    desc: "Игровое сообщество",
-                    color: "#5865f2"
-                },
-                {
-                    title: "Spotify",
-                    url: "https://open.spotify.com/user/moros",
-                    icon: "fab fa-spotify",
-                    desc: "Мой плейлист",
-                    color: "#1db954"
-                },
-                {
-                    title: "Instagram",
-                    url: "https://instagram.com/moros",
-                    icon: "fab fa-instagram",
-                    desc: "Фото и сторис",
-                    color: "#e1306c"
-                }
+                { id: 1, title: 'Telegram', url: 'https://t.me/moros_channel', icon: 'fab fa-telegram', desc: 'Основной канал' },
+                { id: 2, title: 'GitHub', url: 'https://github.com/moros', icon: 'fab fa-github', desc: 'Исходный код' },
+                { id: 3, title: 'YouTube', url: 'https://youtube.com/@moros', icon: 'fab fa-youtube', desc: 'Видео и стримы' },
+                { id: 4, title: 'Discord', url: 'https://discord.gg/moros', icon: 'fab fa-discord', desc: 'Сообщество' },
+                { id: 5, title: 'Spotify', url: 'https://open.spotify.com/user/moros', icon: 'fab fa-spotify', desc: 'Плейлисты' },
+                { id: 6, title: 'VK', url: 'https://vk.com/moros', icon: 'fab fa-vk', desc: 'Социальная сеть' }
             ],
             music: [
-                {
-                    title: "Lose Yourself",
-                    artist: "Eminem",
-                    url: "#"
-                },
-                {
-                    title: "Bohemian Rhapsody",
-                    artist: "Queen",
-                    url: "#"
-                },
-                {
-                    title: "Shape of You",
-                    artist: "Ed Sheeran",
-                    url: "#"
-                },
-                {
-                    title: "Blinding Lights",
-                    artist: "The Weeknd",
-                    url: "#"
-                }
+                { id: 1, title: 'Lose Yourself', artist: 'Eminem', playing: true },
+                { id: 2, title: 'Bohemian Rhapsody', artist: 'Queen', playing: false },
+                { id: 3, title: 'Shape of You', artist: 'Ed Sheeran', playing: false },
+                { id: 4, title: 'Blinding Lights', artist: 'The Weeknd', playing: false }
             ],
             posts: [
-                {
-                    title: "Запускаю новый проект!",
-                    content: "Скоро анонсирую новый digital-продукт. Следите за обновлениями в Telegram-канале.",
-                    date: "15 января 2024"
+                { 
+                    id: 1, 
+                    author: 'Moros Network',
+                    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop',
+                    content: 'Только что запустил новую версию сайта! Теперь с админ-панелью и музыкальным плеером. Что думаете?',
+                    likes: 42,
+                    comments: 8,
+                    shares: 3,
+                    time: '2 часа назад',
+                    image: ''
                 },
-                {
-                    title: "Обновил плейлист",
-                    content: "Добавил новые треки в раздел музыки. Буду рад вашим рекомендациям!",
-                    date: "12 января 2024"
+                { 
+                    id: 2, 
+                    author: 'Moros Network',
+                    avatar: 'https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400&auto=format&fit=crop',
+                    content: 'Работаю над новым проектом в области веб-разработки. Скоро будут анонсы! Кто с нетерпением ждет?',
+                    likes: 28,
+                    comments: 5,
+                    shares: 1,
+                    time: '1 день назад',
+                    image: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&auto=format&fit=crop'
                 }
             ]
         };
-
-        // Загрузка данных
+        
+        // ===== ИНИЦИАЛИЗАЦИЯ =====
         document.addEventListener('DOMContentLoaded', function() {
-            // Профиль
-            document.getElementById('userName').textContent = siteData.profile.name;
-            document.getElementById('userBio').textContent = siteData.profile.bio;
-            document.querySelector('.avatar').src = siteData.profile.avatar;
-
-            // Ссылки
-            const linksContainer = document.getElementById('linksContainer');
+            loadData();
+            renderAll();
+            updateStats();
+            
+            // Автоматическое сохранение каждые 30 секунд
+            setInterval(saveToLocalStorage, 30000);
+            
+            console.log('Moros Network загружен! Пароль админа:', ADMIN_PASSWORD);
+        });
+        
+        // ===== РЕНДЕРИНГ =====
+        function renderAll() {
+            renderProfile();
+            renderLinks();
+            renderMusic();
+            renderPosts();
+            renderAdminLists();
+        }
+        
+        function renderProfile() {
+            document.getElementById('profileName').textContent = siteData.profile.name;
+            document.getElementById('profileBio').textContent = siteData.profile.bio;
+            document.getElementById('profileAvatar').src = siteData.profile.avatar;
+            document.getElementById('followersCount').textContent = formatNumber(siteData.profile.followers);
+        }
+        
+        function renderLinks() {
+            const container = document.getElementById('linksGrid');
+            if (!container) return;
+            
+            container.innerHTML = '';
             siteData.links.forEach(link => {
-                const linkCard = document.createElement('a');
-                linkCard.href = link.url;
-                linkCard.target = '_blank';
-                linkCard.className = 'link-card';
-                linkCard.innerHTML = `
-                    <div class="link-icon" style="background: ${link.color}20; color: ${link.color}">
+                const linkEl = document.createElement('a');
+                linkEl.href = link.url;
+                linkEl.target = '_blank';
+                linkEl.className = 'social-link';
+                linkEl.innerHTML = `
+                    <div class="link-icon">
                         <i class="${link.icon}"></i>
                     </div>
-                    <div class="link-content">
-                        <div class="link-title">${link.title}</div>
-                        <div class="link-desc">${link.desc}</div>
+                    <div class="link-text">
+                        <h4>${link.title}</h4>
+                        <span>${link.desc}</span>
                     </div>
-                    <div class="link-arrow">
-                        <i class="fas fa-arrow-right"></i>
-                    </div>
+                    <i class="fas fa-arrow-right" style="color: var(--text-secondary);"></i>
                 `;
-                linksContainer.appendChild(linkCard);
+                container.appendChild(linkEl);
             });
-
-            // Музыка
-            const playlist = document.getElementById('playlist');
-            siteData.music.forEach((track, index) => {
-                const trackEl = document.createElement('div');
-                trackEl.className = 'playlist-track';
-                trackEl.onclick = () => selectTrack(index);
-                trackEl.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 1rem;">
-                        <div style="width: 40px; height: 40px; background: var(--gradient); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
-                            ${index + 1}
-                        </div>
-                        <div>
-                            <div style="font-weight: 500;">${track.title}</div>
-                            <div style="color: var(--text-secondary); font-size: 0.9rem;">${track.artist}</div>
-                        </div>
-                    </div>
-                    <button class="control-btn" style="width: 40px; height: 40px;" onclick="playTrack(${index}); event.stopPropagation()">
-                        <i class="fas fa-play"></i>
-                    </button>
-                `;
-                playlist.appendChild(trackEl);
-            });
-
-            // Посты
-            const postsContainer = document.getElementById('postsContainer');
+        }
+        
+        function renderMusic() {
+            const currentTrack = siteData.music.find(track => track.playing);
+            if (currentTrack) {
+                document.getElementById('currentTrack').textContent = currentTrack.title;
+                document.getElementById('currentArtist').textContent = currentTrack.artist;
+            }
+        }
+        
+        function renderPosts() {
+            const container = document.getElementById('postsFeed');
+            if (!container) return;
+            
+            container.innerHTML = '';
             siteData.posts.forEach(post => {
-                const postCard = document.createElement('div');
-                postCard.className = 'post-card';
-                postCard.innerHTML = `
+                const postEl = document.createElement('article');
+                postEl.className = 'post-card fade-in';
+                postEl.innerHTML = `
                     <div class="post-header">
-                        <div class="post-date">${post.date}</div>
-                        <button style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
-                            <i class="fas fa-ellipsis-h"></i>
-                        </button>
+                        <div class="post-author">
+                            <img src="${post.avatar}" alt="Аватар" class="author-avatar">
+                            <div class="author-info">
+                                <h4>${post.author}</h4>
+                                <span>${post.time}</span>
+                            </div>
+                        </div>
+                        <div class="post-menu">
+                            <button class="menu-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
                     </div>
-                    <h3 class="post-title">${post.title}</h3>
-                    <div class="post-content">${post.content}</div>
-                    <div style="margin-top: 1rem; display: flex; gap: 1rem;">
-                        <button style="background: none; border: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <i class="fas fa-heart"></i> 24
-                        </button>
-                        <button style="background: none; border: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 5px;">
-                            <i class="fas fa-share"></i>
+                    <div class="post-content">
+                        ${post.content}
+                    </div>
+                    ${post.image ? `<img src="${post.image}" alt="Изображение" class="post-image">` : ''}
+                    <div class="post-footer">
+                        <div class="post-stats">
+                            <button class="stat-btn like-btn" onclick="likePost(${post.id})">
+                                <i class="fas fa-heart"></i> ${post.likes}
+                            </button>
+                            <button class="stat-btn" onclick="commentPost(${post.id})">
+                                <i class="fas fa-comment"></i> ${post.comments}
+                            </button>
+                            <button class="stat-btn" onclick="sharePost(${post.id})">
+                                <i class="fas fa-share"></i> ${post.shares}
+                            </button>
+                        </div>
+                        <button class="icon-btn" onclick="savePost(${post.id})">
+                            <i class="fas fa-bookmark"></i>
                         </button>
                     </div>
                 `;
-                postsContainer.appendChild(postCard);
-            });
-        });
-
-        // Музыкальный плеер
-        let currentTrackIndex = 0;
-        let isPlaying = false;
-
-        function selectTrack(index) {
-            currentTrackIndex = index;
-            const track = siteData.music[index];
-            document.getElementById('currentTrack').textContent = track.title;
-            document.getElementById('currentArtist').textContent = track.artist;
-            
-            // Обновляем активный трек
-            document.querySelectorAll('.playlist-track').forEach((el, i) => {
-                el.style.background = i === index ? 'rgba(123, 104, 238, 0.2)' : '';
+                container.appendChild(postEl);
             });
         }
-
-        function playTrack(index) {
-            selectTrack(index);
-            isPlaying = true;
-            document.getElementById('playBtn').className = 'fas fa-pause';
-            // Здесь будет реальное воспроизведение
-            alert(`Воспроизведение: ${siteData.music[index].title}`);
+        
+        function renderAdminLists() {
+            renderAdminLinks();
+            renderAdminMusic();
+            renderAdminPosts();
         }
-
-        function togglePlay() {
-            if (!siteData.music.length) return;
+        
+        function renderAdminLinks() {
+            const container = document.getElementById('adminLinksList');
+            if (!container) return;
             
-            isPlaying = !isPlaying;
-            document.getElementById('playBtn').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+            container.innerHTML = '';
+            siteData.links.forEach(link => {
+                const item = document.createElement('div');
+                item.className = 'admin-item';
+                item.innerHTML = `
+                    <div>
+                        <strong>${link.title}</strong>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">${link.url}</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="item-btn" onclick="editLink(${link.id})">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="item-btn" onclick="deleteLink(${link.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        function renderAdminMusic() {
+            const container = document.getElementById('adminMusicList');
+            if (!container) return;
             
-            if (isPlaying) {
-                alert(`Воспроизведение: ${siteData.music[currentTrackIndex].title}`);
+            container.innerHTML = '';
+            siteData.music.forEach(track => {
+                const item = document.createElement('div');
+                item.className = 'admin-item';
+                item.innerHTML = `
+                    <div>
+                        <strong>${track.title}</strong>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">${track.artist}</div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="item-btn" onclick="setCurrentTrack(${track.id})">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button class="item-btn" onclick="deleteTrack(${track.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        function renderAdminPosts() {
+            const container = document.getElementById('adminPostsList');
+            if (!container) return;
+            
+            container.innerHTML = '';
+            siteData.posts.forEach(post => {
+                const item = document.createElement('div');
+                item.className = 'admin-item';
+                item.innerHTML = `
+                    <div style="flex: 1;">
+                        <strong>${post.content.substring(0, 50)}...</strong>
+                        <div style="color: var(--text-secondary); font-size: 0.9rem;">
+                            ${post.time} • ❤️ ${post.likes}
+                        </div>
+                    </div>
+                    <div class="item-actions">
+                        <button class="item-btn" onclick="deletePost(${post.id})">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+        
+        function updateStats() {
+            document.getElementById('postsCount').textContent = siteData.posts.length;
+            document.getElementById('linksCount').textContent = siteData.links.length;
+        }
+        
+        // ===== АДМИН-ПАНЕЛЬ =====
+        function openAdminPanel() {
+            const password = prompt('Введите пароль администратора:', '');
+            if (password === ADMIN_PASSWORD) {
+                document.getElementById('adminOverlay').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'block';
+                renderAdminLists();
+            } else if (password !== null) {
+                alert('Неверный пароль!');
             }
         }
-
-        function playNext() {
-            if (!siteData.music.length) return;
-            currentTrackIndex = (currentTrackIndex + 1) % siteData.music.length;
-            playTrack(currentTrackIndex);
+        
+        function closeAdminPanel() {
+            document.getElementById('adminOverlay').style.display = 'none';
+            document.getElementById('adminPanel').style.display = 'none';
         }
-
+        
+        function switchTab(tabName) {
+            // Скрыть все вкладки
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            document.querySelectorAll('.admin-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Показать выбранную вкладку
+            document.getElementById('tab-' + tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function openTab(tabName) {
+            openAdminPanel();
+            setTimeout(() => switchTab(tabName), 100);
+        }
+        
+        // ===== УПРАВЛЕНИЕ ДАННЫМИ =====
+        function saveProfile() {
+            siteData.profile.name = document.getElementById('adminName').value;
+            siteData.profile.bio = document.getElementById('adminBio').value;
+            siteData.profile.avatar = document.getElementById('adminAvatar').value;
+            siteData.profile.followers = parseInt(document.getElementById('adminFollowers').value) || 0;
+            
+            saveToLocalStorage();
+            renderProfile();
+            alert('Профиль сохранен!');
+        }
+        
+        function addNewLink() {
+            const title = prompt('Название ссылки (например: Telegram):', '');
+            if (!title) return;
+            
+            const url = prompt('URL ссылки:', 'https://');
+            if (!url) return;
+            
+            const desc = prompt('Описание:', 'Моя социальная сеть');
+            
+            const newLink = {
+                id: Date.now(),
+                title: title,
+                url: url,
+                icon: 'fas fa-link',
+                desc: desc || ''
+            };
+            
+            siteData.links.push(newLink);
+            saveToLocalStorage();
+            renderLinks();
+            renderAdminLinks();
+            updateStats();
+            alert('Ссылка добавлена!');
+        }
+        
+        function editLink(id) {
+            const link = siteData.links.find(l => l.id === id);
+            if (!link) return;
+            
+            const newTitle = prompt('Новое название:', link.title);
+            if (newTitle !== null) link.title = newTitle;
+            
+            const newUrl = prompt('Новый URL:', link.url);
+            if (newUrl !== null) link.url = newUrl;
+            
+            const newDesc = prompt('Новое описание:', link.desc);
+            if (newDesc !== null) link.desc = newDesc;
+            
+            saveToLocalStorage();
+            renderLinks();
+            renderAdminLinks();
+        }
+        
+        function deleteLink(id) {
+            if (confirm('Удалить эту ссылку?')) {
+                siteData.links = siteData.links.filter(link => link.id !== id);
+                saveToLocalStorage();
+                renderLinks();
+                renderAdminLinks();
+                updateStats();
+            }
+        }
+        
+        function addNewTrack() {
+            const title = prompt('Название трека:', '');
+            if (!title) return;
+            
+            const artist = prompt('Исполнитель:', '');
+            if (!artist) return;
+            
+            const newTrack = {
+                id: Date.now(),
+                title: title,
+                artist: artist,
+                playing: false
+            };
+            
+            siteData.music.push(newTrack);
+            saveToLocalStorage();
+            renderMusic();
+            renderAdminMusic();
+            alert('Трек добавлен!');
+        }
+        
+        function setCurrentTrack(id) {
+            siteData.music.forEach(track => {
+                track.playing = track.id === id;
+            });
+            saveToLocalStorage();
+            renderMusic();
+            alert('Трек установлен как текущий!');
+        }
+        
+        function deleteTrack(id) {
+            if (confirm('Удалить этот трек?')) {
+                siteData.music = siteData.music.filter(track => track.id !== id);
+                saveToLocalStorage();
+                renderMusic();
+                renderAdminMusic();
+            }
+        }
+        
+        function createNewPost() {
+            const content = prompt('Текст поста:', '');
+            if (!content) return;
+            
+            const newPost = {
+                id: Date.now(),
+                author: siteData.profile.name,
+                avatar: siteData.profile.avatar,
+                content: content,
+                likes: 0,
+                comments: 0,
+                shares: 0,
+                time: 'Только что',
+                image: ''
+            };
+            
+            siteData.posts.unshift(newPost);
+            saveToLocalStorage();
+            renderPosts();
+            updateStats();
+            alert('Пост опубликован!');
+        }
+        
+        function publishPost() {
+            const content = document.getElementById('newPostContent').value.trim();
+            if (!content) {
+                alert('Введите текст поста!');
+                return;
+            }
+            
+            createNewPostFromContent(content);
+            document.getElementById('newPostContent').value = '';
+        }
+        
+        function createNewPostFromContent(content) {
+            const newPost = {
+                id: Date.now(),
+                author: siteData.profile.name,
+                avatar: siteData.profile.avatar,
+                content: content,
+                likes: 0,
+                comments: 0,
+                shares: 0,
+                time: 'Только что',
+                image: ''
+            };
+            
+            siteData.posts.unshift(newPost);
+            saveToLocalStorage();
+            renderPosts();
+            updateStats();
+        }
+        
+        function deletePost(id) {
+            if (confirm('Удалить этот пост?')) {
+                siteData.posts = siteData.posts.filter(post => post.id !== id);
+                saveToLocalStorage();
+                renderPosts();
+                renderAdminPosts();
+                updateStats();
+            }
+        }
+        
+        function likePost(id) {
+            const post = siteData.posts.find(p => p.id === id);
+            if (post) {
+                post.likes++;
+                saveToLocalStorage();
+                renderPosts();
+                renderAdminPosts();
+            }
+        }
+        
+        function commentPost(id) {
+            const comment = prompt('Ваш комментарий:', '');
+            if (comment) {
+                const post = siteData.posts.find(p => p.id === id);
+                if (post) {
+                    post.comments++;
+                    saveToLocalStorage();
+                    renderPosts();
+                    alert('Комментарий добавлен!');
+                }
+            }
+        }
+        
+        function sharePost(id) {
+            const post = siteData.posts.find(p => p.id === id);
+            if (post) {
+                post.shares++;
+                saveToLocalStorage();
+                renderPosts();
+                alert('Пост расшарен!');
+            }
+        }
+        
+        // ===== МУЗЫКАЛЬНЫЙ ПЛЕЕР =====
         function playPrev() {
-            if (!siteData.music.length) return;
-            currentTrackIndex = currentTrackIndex === 0 ? siteData.music.length - 1 : currentTrackIndex - 1;
-            playTrack(currentTrackIndex);
+            let currentIndex = siteData.music.findIndex(track => track.playing);
+            if (currentIndex === -1) currentIndex = 0;
+            
+            const prevIndex = currentIndex === 0 ? siteData.music.length - 1 : currentIndex - 1;
+            setCurrentTrack(siteData.music[prevIndex].id);
         }
-
-        // Админка
-        function openAdmin() {
-            const password = prompt('Введите пароль админа:', 'admin123');
-            if (password === 'admin123') {
-                alert('Админ-панель откроется в следующем обновлении!\n\nСейчас вы можете:\n1. Изменить текст в коде\n2. Добавить свои ссылки\n3. Сменить музыку');
+        
+        function togglePlay() {
+            const btn = document.getElementById('playBtn');
+            if (btn.classList.contains('fa-play')) {
+                btn.className = 'fas fa-pause';
+                // Здесь можно добавить реальное воспроизведение
+            } else {
+                btn.className = 'fas fa-play';
             }
         }
-
-        // Выбираем первый трек по умолчанию
-        setTimeout(() => {
-            if (siteData.music.length > 0) {
-                selectTrack(0);
+        
+        function playNext() {
+            let currentIndex = siteData.music.findIndex(track => track.playing);
+            if (currentIndex === -1) currentIndex = 0;
+            
+            const nextIndex = (currentIndex + 1) % siteData.music.length;
+            setCurrentTrack(siteData.music[nextIndex].id);
+        }
+        
+        // ===== СОХРАНЕНИЕ ДАННЫХ =====
+        function saveToLocalStorage() {
+            localStorage.setItem('moros_network_data', JSON.stringify(siteData));
+        }
+        
+        function loadData() {
+            const saved = localStorage.getItem('moros_network_data');
+            if (saved) {
+                siteData = JSON.parse(saved);
             }
-        }, 500);
+        }
+        
+        function exportData() {
+            const dataStr = JSON.stringify(siteData, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'moros-network-backup.json';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            
+            alert('Данные экспортированы!');
+        }
+        
+        function saveSettings() {
+            const newPassword = document.getElementById('adminPassword').value;
+            if (newPassword) {
+                alert('Пароль изменен на: ' + newPassword);
+                // В реальном приложении нужно сохранять пароль
+            }
+            
+            const importFile = document.getElementById('importFile').files[0];
+            if (importFile) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const imported = JSON.parse(e.target.result);
+                        siteData = imported;
+                        saveToLocalStorage();
+                        renderAll();
+                        updateStats();
+                        alert('Данные импортированы!');
+                    } catch (error) {
+                        alert('Ошибка импорта: ' + error.message);
+                    }
+                };
+                reader.readAsText(importFile);
+            }
+        }
+        
+        // ===== УТИЛИТЫ =====
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num;
+        }
+        
+        // Горячие клавиши
+        document.addEventListener('keydown', function(e) {
+            if (e.altKey && e.key === 'a') {
+                e.preventDefault();
+                openAdminPanel();
+            }
+            if (e.key === 'Escape') {
+                closeAdminPanel();
+            }
+        });
     </script>
 </body>
 </html>
