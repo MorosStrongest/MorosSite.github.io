@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мои ссылки | Имя</title>
+    
+    <!-- Стили -->
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Шрифты -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon (иконка сайта) -->
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <!-- Аватар и информация -->
+        <header class="profile-section">
+            <div class="avatar-container">
+                <img src="assets/avatar.jpg" alt="Аватар" class="avatar" id="avatar">
+                <div class="online-status"></div>
+            </div>
+            <h1 class="name" id="name">Ваше Имя</h1>
+            <p class="bio" id="bio">Дизайнер, разработчик, создатель контента. Здесь все мои важные ссылки.</p>
+            <div class="theme-toggle">
+                <button onclick="toggleTheme()">
+                    <i class="fas fa-moon"></i> Тема
+                </button>
+            </div>
+        </header>
+
+        <!-- Основные ссылки -->
+        <main class="links-section">
+            <h2 class="section-title">Мои проекты и соцсети</h2>
+            
+            <div class="links-grid">
+                <!-- Ссылки будут загружены через JavaScript -->
+            </div>
+        </main>
+
+        <!-- Контактная информация -->
+        <footer class="footer-section">
+            <h2 class="section-title">Контакты</h2>
+            <div class="contacts">
+                <a href="mailto:you@example.com" class="contact-link">
+                    <i class="fas fa-envelope"></i> you@example.com
+                </a>
+                <div class="social-links">
+                    <a href="#" class="social-icon"><i class="fab fa-telegram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-whatsapp"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-vk"></i></a>
+                </div>
+            </div>
+            <p class="copyright">© 2024 • Сделано с ❤️</p>
+        </footer>
+    </div>
+
+    <!-- Админ-панель (скрыта по умолчанию) -->
+    <div id="adminPanel" style="display: none;">
+        <div class="admin-overlay">
+            <div class="admin-modal">
+                <h2>✏️ Редактирование сайта</h2>
+                
+                <div class="admin-section">
+                    <h3>👤 Профиль</h3>
+                    <label>Имя:</label>
+                    <input type="text" id="editName" class="admin-input" placeholder="Ваше имя или ник">
+                    
+                    <label>Описание:</label>
+                    <textarea id="editBio" class="admin-input" rows="3" placeholder="Краткое описание о себе"></textarea>
+                    
+                    <label>Ссылка на аватар:</label>
+                    <input type="text" id="editAvatar" class="admin-input" placeholder="https://example.com/avatar.jpg">
+                    <small>Можно загрузить через <a href="https://imgbb.com/" target="_blank">imgbb.com</a> и вставить ссылку</small>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>🔗 Ссылки</h3>
+                    <p>Формат JSON. Можно найти иконки на <a href="https://fontawesome.com/icons" target="_blank">FontAwesome</a></p>
+                    <textarea id="editLinks" class="admin-input" rows="12" placeholder='[
+  {
+    "title": "Телеграм-канал",
+    "url": "https://t.me/yourchannel",
+    "icon": "fab fa-telegram",
+    "description": "Анонсы и полезные материалы",
+    "color": "#0088cc"
+  }
+]'></textarea>
+                    <small>Иконки: fab fa-telegram, fab fa-discord, fab fa-github, fab fa-youtube, fab fa-vk, fab fa-instagram</small>
+                </div>
+                
+                <div class="admin-section">
+                    <h3>📧 Контакты</h3>
+                    <label>Email:</label>
+                    <input type="email" id="editEmail" class="admin-input" placeholder="your@email.com">
+                    
+                    <label>Telegram:</label>
+                    <input type="text" id="editTelegram" class="admin-input" placeholder="https://t.me/yourname">
+                    
+                    <label>ВКонтакте:</label>
+                    <input type="text" id="editVk" class="admin-input" placeholder="https://vk.com/yourpage">
+                </div>
+                
+                <div class="admin-buttons">
+                    <button onclick="saveChanges()" class="admin-btn save">
+                        <i class="fas fa-save"></i> Сохранить
+                    </button>
+                    <button onclick="hideAdminPanel()" class="admin-btn cancel">
+                        <i class="fas fa-times"></i> Отмена
+                    </button>
+                    <button onclick="exportData()" class="admin-btn export">
+                        <i class="fas fa-download"></i> Экспорт
+                    </button>
+                    <button onclick="importData()" class="admin-btn import">
+                        <i class="fas fa-upload"></i> Импорт
+                    </button>
+                </div>
+                
+                <div class="admin-help">
+                    <p><strong>Горячие клавиши:</strong> Alt+A — открыть редактор, Esc — закрыть</p>
+                    <p><strong>Пароль для редактирования:</strong> admin123 (смените в файле script.js)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Триггер для админ-панели (шестеренка в углу) -->
+    <div class="admin-trigger" onclick="showAdminPanel()" title="Alt+A для редактирования">
+        <i class="fas fa-cog"></i>
+    </div>
+
+    <!-- Скрипты -->
+    <script src="script.js"></script>
+</body>
+</html>
