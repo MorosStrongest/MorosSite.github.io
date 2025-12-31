@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Links | Портфолио</title>
+    
+    <!-- ВСТРАИВАЕМ CSS ПРЯМО В HTML (чтобы точно работало) -->
+    <style>
+        /* ===== БАЗОВЫЕ СТИЛИ ===== */
+        :root {
+            --bg-color: #0f1419;
+            --card-bg: #1a2029;
+            --text-color: #e1e8ed;
+            --text-secondary: #8a9ba8;
+            --accent-color: #7b68ee;
+            --accent-light: #9370db;
+            --border-color: #2d3748;
+            --shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+            --gradient: linear-gradient(135deg, #7b68ee 0%, #9370db 100%);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* ===== КОНТЕЙНЕР ===== */
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        /* ===== ПРОФИЛЬ ===== */
+        .profile {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--accent-color);
+            margin-bottom: 1rem;
+        }
+        
+        .name {
+            font-size: 2.2rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .bio {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 1.5rem;
+        }
+        
+        /* ===== ССЫЛКИ ===== */
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+        
+        .link-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            text-decoration: none;
+            color: var(--text-color);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow);
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 40px rgba(123, 104, 238, 0.2);
+        }
+        
+        .link-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(123, 104, 238, 0.1);
+            color: var(--accent-color);
+        }
+        
+        .link-content {
+            flex: 1;
+        }
+        
+        .link-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .link-desc {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+        
+        .link-arrow {
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .link-card:hover .link-arrow {
+            opacity: 1;
+            color: var(--accent-color);
+            transform: translateX(5px);
+        }
+        
+        /* ===== МУЗЫКА ===== */
+        .music-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+        }
+        
+        .section-title i {
+            color: var(--accent-color);
+        }
+        
+        .music-player {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .now-playing {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .track-cover {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .track-info h3 {
+            margin-bottom: 0.3rem;
+        }
+        
+        .track-info p {
+            color: var(--text-secondary);
+        }
+        
+        .player-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: var(--accent-color);
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 5px 15px rgba(123, 104, 238, 0.4);
+        }
+        
+        .playlist {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+        
+        .playlist-track {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .playlist-track:hover {
+            background: rgba(123, 104, 238, 0.1);
+        }
+        
+        /* ===== ПОСТЫ ===== */
+        .posts-section {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .posts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+        
+        .post-card {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border-left: 4px solid var(--accent-color);
+        }
+        
+        .post-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .post-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .post-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-color);
+        }
+        
+        .post-content {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        
+        /* ===== КНОПКИ УПРАВЛЕНИЯ ===== */
+        .admin-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 10px 30px rgba(123, 104, 238, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .admin-btn:hover {
+            transform: scale(1.1) rotate(90deg);
+        }
+        
+        /* ===== АДАПТИВНОСТЬ ===== */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .name {
+                font-size: 1.8rem;
+            }
+            
+            .admin-btn {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+    
+    <!-- Font Awesome иконки -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Шрифт Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- ПРОФИЛЬ -->
+        <section class="profile">
+            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400" alt="Аватар" class="avatar">
+            <h1 class="name" id="userName">Александр Моро</h1>
+            <p class="bio" id="userBio">Создаю цифровые продукты. Люблю музыку, технологии и дизайн. Здесь собраны все мои важные ссылки и проекты.</p>
+            <div class="stats">
+                <span><i class="fas fa-users"></i> 1.5K подписчиков</span>
+                <span><i class="fas fa-music"></i> 8 треков</span>
+                <span><i class="fas fa-link"></i> 12 ссылок</span>
+            </div>
+        </section>
+
+        <!-- ССЫЛКИ -->
+        <section class="links-section">
+            <h2 class="section-title"><i class="fas fa-external-link-alt"></i> Мои ссылки</h2>
+            <div class="links-grid" id="linksContainer">
+                <!-- Ссылки будут добавляться через JS -->
+            </div>
+        </section>
+
+        <!-- МУЗЫКА -->
+        <section class="music-section">
+            <h2 class="section-title"><i class="fas fa-headphones"></i> Любимая музыка</h2>
+            <div class="music-player">
+                <div class="now-playing">
+                    <div class="track-cover">
+                        <i class="fas fa-music"></i>
+                    </div>
+                    <div class="track-info">
+                        <h3 id="currentTrack">Выберите трек</h3>
+                        <p id="currentArtist">Нажмите на трек из списка</p>
+                    </div>
+                </div>
+                <div class="player-controls">
+                    <button class="control-btn" onclick="playPrev()"><i class="fas fa-step-backward"></i></button>
+                    <button class="control-btn" onclick="togglePlay()"><i class="fas fa-play" id="playBtn"></i></button>
+                    <button class="control-btn" onclick="playNext()"><i class="fas fa-step-forward"></i></button>
+                </div>
+            </div>
+            <div class="playlist" id="playlist">
+                <!-- Плейлист будет добавляться через JS -->
+            </div>
+        </section>
+
+        <!-- ПОСТЫ -->
+        <section class="posts-section">
+            <h2 class="section-title"><i class="fas fa-newspaper"></i> Последние посты</h2>
+            <div class="posts-grid" id="postsContainer">
+                <!-- Посты будут добавляться через JS -->
+            </div>
+        </section>
+    </div>
+
+    <!-- КНОПКА АДМИНКИ -->
+    <button class="admin-btn" onclick="openAdmin()">
+        <i class="fas fa-cog"></i>
+    </button>
+
+    <!-- СКРИПТЫ ВСТРАИВАЕМ ПРЯМО В HTML -->
+    <script>
+        // Данные
+        const siteData = {
+            profile: {
+                name: "Александр Моро",
+                bio: "Создаю цифровые продукты. Люблю музыку, технологии и дизайн.",
+                avatar: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=400"
+            },
+            links: [
+                {
+                    title: "Telegram",
+                    url: "https://t.me/moros_channel",
+                    icon: "fab fa-telegram",
+                    desc: "Мой основной канал",
+                    color: "#0088cc"
+                },
+                {
+                    title: "GitHub",
+                    url: "https://github.com/moros",
+                    icon: "fab fa-github",
+                    desc: "Мои проекты и код",
+                    color: "#181717"
+                },
+                {
+                    title: "YouTube",
+                    url: "https://youtube.com/@moros",
+                    icon: "fab fa-youtube",
+                    desc: "Видео и стримы",
+                    color: "#ff0000"
+                },
+                {
+                    title: "Discord",
+                    url: "https://discord.gg/moros",
+                    icon: "fab fa-discord",
+                    desc: "Игровое сообщество",
+                    color: "#5865f2"
+                },
+                {
+                    title: "Spotify",
+                    url: "https://open.spotify.com/user/moros",
+                    icon: "fab fa-spotify",
+                    desc: "Мой плейлист",
+                    color: "#1db954"
+                },
+                {
+                    title: "Instagram",
+                    url: "https://instagram.com/moros",
+                    icon: "fab fa-instagram",
+                    desc: "Фото и сторис",
+                    color: "#e1306c"
+                }
+            ],
+            music: [
+                {
+                    title: "Lose Yourself",
+                    artist: "Eminem",
+                    url: "#"
+                },
+                {
+                    title: "Bohemian Rhapsody",
+                    artist: "Queen",
+                    url: "#"
+                },
+                {
+                    title: "Shape of You",
+                    artist: "Ed Sheeran",
+                    url: "#"
+                },
+                {
+                    title: "Blinding Lights",
+                    artist: "The Weeknd",
+                    url: "#"
+                }
+            ],
+            posts: [
+                {
+                    title: "Запускаю новый проект!",
+                    content: "Скоро анонсирую новый digital-продукт. Следите за обновлениями в Telegram-канале.",
+                    date: "15 января 2024"
+                },
+                {
+                    title: "Обновил плейлист",
+                    content: "Добавил новые треки в раздел музыки. Буду рад вашим рекомендациям!",
+                    date: "12 января 2024"
+                }
+            ]
+        };
+
+        // Загрузка данных
+        document.addEventListener('DOMContentLoaded', function() {
+            // Профиль
+            document.getElementById('userName').textContent = siteData.profile.name;
+            document.getElementById('userBio').textContent = siteData.profile.bio;
+            document.querySelector('.avatar').src = siteData.profile.avatar;
+
+            // Ссылки
+            const linksContainer = document.getElementById('linksContainer');
+            siteData.links.forEach(link => {
+                const linkCard = document.createElement('a');
+                linkCard.href = link.url;
+                linkCard.target = '_blank';
+                linkCard.className = 'link-card';
+                linkCard.innerHTML = `
+                    <div class="link-icon" style="background: ${link.color}20; color: ${link.color}">
+                        <i class="${link.icon}"></i>
+                    </div>
+                    <div class="link-content">
+                        <div class="link-title">${link.title}</div>
+                        <div class="link-desc">${link.desc}</div>
+                    </div>
+                    <div class="link-arrow">
+                        <i class="fas fa-arrow-right"></i>
+                    </div>
+                `;
+                linksContainer.appendChild(linkCard);
+            });
+
+            // Музыка
+            const playlist = document.getElementById('playlist');
+            siteData.music.forEach((track, index) => {
+                const trackEl = document.createElement('div');
+                trackEl.className = 'playlist-track';
+                trackEl.onclick = () => selectTrack(index);
+                trackEl.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <div style="width: 40px; height: 40px; background: var(--gradient); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white;">
+                            ${index + 1}
+                        </div>
+                        <div>
+                            <div style="font-weight: 500;">${track.title}</div>
+                            <div style="color: var(--text-secondary); font-size: 0.9rem;">${track.artist}</div>
+                        </div>
+                    </div>
+                    <button class="control-btn" style="width: 40px; height: 40px;" onclick="playTrack(${index}); event.stopPropagation()">
+                        <i class="fas fa-play"></i>
+                    </button>
+                `;
+                playlist.appendChild(trackEl);
+            });
+
+            // Посты
+            const postsContainer = document.getElementById('postsContainer');
+            siteData.posts.forEach(post => {
+                const postCard = document.createElement('div');
+                postCard.className = 'post-card';
+                postCard.innerHTML = `
+                    <div class="post-header">
+                        <div class="post-date">${post.date}</div>
+                        <button style="background: none; border: none; color: var(--text-secondary); cursor: pointer;">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </button>
+                    </div>
+                    <h3 class="post-title">${post.title}</h3>
+                    <div class="post-content">${post.content}</div>
+                    <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                        <button style="background: none; border: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                            <i class="fas fa-heart"></i> 24
+                        </button>
+                        <button style="background: none; border: none; color: var(--text-secondary); cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                            <i class="fas fa-share"></i>
+                        </button>
+                    </div>
+                `;
+                postsContainer.appendChild(postCard);
+            });
+        });
+
+        // Музыкальный плеер
+        let currentTrackIndex = 0;
+        let isPlaying = false;
+
+        function selectTrack(index) {
+            currentTrackIndex = index;
+            const track = siteData.music[index];
+            document.getElementById('currentTrack').textContent = track.title;
+            document.getElementById('currentArtist').textContent = track.artist;
+            
+            // Обновляем активный трек
+            document.querySelectorAll('.playlist-track').forEach((el, i) => {
+                el.style.background = i === index ? 'rgba(123, 104, 238, 0.2)' : '';
+            });
+        }
+
+        function playTrack(index) {
+            selectTrack(index);
+            isPlaying = true;
+            document.getElementById('playBtn').className = 'fas fa-pause';
+            // Здесь будет реальное воспроизведение
+            alert(`Воспроизведение: ${siteData.music[index].title}`);
+        }
+
+        function togglePlay() {
+            if (!siteData.music.length) return;
+            
+            isPlaying = !isPlaying;
+            document.getElementById('playBtn').className = isPlaying ? 'fas fa-pause' : 'fas fa-play';
+            
+            if (isPlaying) {
+                alert(`Воспроизведение: ${siteData.music[currentTrackIndex].title}`);
+            }
+        }
+
+        function playNext() {
+            if (!siteData.music.length) return;
+            currentTrackIndex = (currentTrackIndex + 1) % siteData.music.length;
+            playTrack(currentTrackIndex);
+        }
+
+        function playPrev() {
+            if (!siteData.music.length) return;
+            currentTrackIndex = currentTrackIndex === 0 ? siteData.music.length - 1 : currentTrackIndex - 1;
+            playTrack(currentTrackIndex);
+        }
+
+        // Админка
+        function openAdmin() {
+            const password = prompt('Введите пароль админа:', 'admin123');
+            if (password === 'admin123') {
+                alert('Админ-панель откроется в следующем обновлении!\n\nСейчас вы можете:\n1. Изменить текст в коде\n2. Добавить свои ссылки\n3. Сменить музыку');
+            }
+        }
+
+        // Выбираем первый трек по умолчанию
+        setTimeout(() => {
+            if (siteData.music.length > 0) {
+                selectTrack(0);
+            }
+        }, 500);
+    </script>
+</body>
+</html>
